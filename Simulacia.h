@@ -12,13 +12,13 @@ class Simulacia {
 private:
     Plocha plocha;
     std::vector<Mravec> zoznamMravcov;
-    void inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov);
+    void inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int randomOrManual);
     void pridajMravca();
     void vypisPlochuMravcov();
 
 public:
     Simulacia() {}
-    void simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int pocetKrokov, int logika);
+    void simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int pocetKrokov, int logika, int randomOrManual);
 };
 
 #endif //LANGTONOVMRAVEC_SIMULACIA_H

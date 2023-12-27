@@ -25,7 +25,6 @@ void Mravec::setSmer(int smer) {
 }
 
 void Mravec::otocVpravo() {
-
     smer = (smer + 1) % 4;
 }
 

@@ -1,8 +1,8 @@
 #include "Simulacia.h"
 
-void Simulacia::inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov) {
+void Simulacia::inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int randomOrManual) {
 
-    plocha = Plocha(sirkaPlochy,vyskaPlochy);
+    plocha = Plocha(sirkaPlochy,vyskaPlochy, randomOrManual);
 
     for (int i = 0; i < pocetMravcov; ++i)
         pridajMravca();
@@ -59,13 +59,13 @@ void Simulacia::vypisPlochuMravcov() {
     }
 }
 
-void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int pocetKrokov, int logika) {
+void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int pocetKrokov, int logika, int randomOrManual) {
 
     //LOGIKA
     //0 = priama
     //1 = inverzna
 
-    inicializuj(sirkaPlochy, vyskaPlochy, pocetMravcov);
+    inicializuj(sirkaPlochy, vyskaPlochy, pocetMravcov, randomOrManual);
     plocha.vypisPlochu();
     vypisPlochuMravcov();
 

@@ -14,7 +14,9 @@ private:
 
 public:
     Plocha() {}
-    Plocha(int sirkaPlochy, int vyskaPlochy);
+    Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManual);
+    void plochaRandom();
+    void plochaManual();
     void vypisPlochu();
     int getSirka() const;
     void setSirka(int sirka);
