@@ -53,10 +53,6 @@ void Simulacia::vypisPlochuMravcov() {
 
     std::cout << "\n";
     for (int i = 0; i < (plocha.getVyska() * 2) - 1; i++) { std::cout << "-"; }
-
-    for (int i = 0; i < zoznamMravcov.size(); ++i) {
-        //zoznamMravcov[i].vypis();
-    }
 }
 
 void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int pocetKrokov, int logika, int randomOrManual) {
