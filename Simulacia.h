@@ -1,6 +1,7 @@
 #include <vector>
 #include <chrono>
 #include <thread>
+#include <mutex>
 #include "Plocha.h"
 #include "Mravec.h"
 
@@ -10,6 +11,7 @@
 class Simulacia {
 
 private:
+    std::mutex mutex;
     Plocha plocha;
     std::vector<Mravec> zoznamMravcov;
     void inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int randomOrManual);
@@ -19,6 +21,7 @@ private:
 public:
     Simulacia() {}
     void simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int pocetKrokov, int logika, int randomOrManual);
+    void simulujKrok(int j, int logika);
 };
 
 #endif //LANGTONOVMRAVEC_SIMULACIA_H

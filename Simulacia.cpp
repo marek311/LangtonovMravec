@@ -70,43 +70,14 @@ void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int 
     vypisPlochuMravcov();
 
     for (int i = 0; i < pocetKrokov; ++i) {
+        std::vector<std::thread> threads;
 
         for (int j = 0; j < zoznamMravcov.size(); ++j) {
+            threads.emplace_back(&Simulacia::simulujKrok, this, j, logika);
+        }
 
-            int mravecX = zoznamMravcov[j].getPolohaX();
-            int mravecY = zoznamMravcov[j].getPolohaY();
-
-            int index = mravecY * plocha.getSirka() + mravecX;
-
-            int color = plocha.getPoleOnIndex(index).getFarba();
-
-            //PRIAMA
-            if(logika == 0) {
-
-                //BIELA
-                if (color == 0)
-                    zoznamMravcov[j].otocVpravo();
-
-                //CIERNA
-                if (color == 1)
-                    zoznamMravcov[j].otocVlavo();
-
-            }
-
-            //INVERZNA
-            if(logika == 1) {
-
-                //BIELA
-                if (color == 0)
-                    zoznamMravcov[j].otocVlavo();
-
-                //CIERNA
-                if (color == 1)
-                    zoznamMravcov[j].otocVpravo();
-            }
-
-            plocha.zmenFarbaOnIndex(index);
-            zoznamMravcov[j].posunVpred();
+        for (auto &thread : threads) {
+            thread.join();
         }
 
         std::cout << "\n" << "\n";
@@ -117,4 +88,31 @@ void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int 
         std::cout << "\n";
         //std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     }
+}
+
+void Simulacia::simulujKrok(int j, int logika) {
+
+    std::lock_guard<std::mutex> lock(mutex);
+
+    int mravecX = zoznamMravcov[j].getPolohaX();
+    int mravecY = zoznamMravcov[j].getPolohaY();
+
+    int index = mravecY * plocha.getSirka() + mravecX;
+
+    int color = plocha.getPoleOnIndex(index).getFarba();
+
+    if (logika == 0) {
+        if (color == 0)
+            zoznamMravcov[j].otocVpravo();
+        if (color == 1)
+            zoznamMravcov[j].otocVlavo();
+    } else if (logika == 1) {
+        if (color == 0)
+            zoznamMravcov[j].otocVlavo();
+        if (color == 1)
+            zoznamMravcov[j].otocVpravo();
+    }
+
+    plocha.zmenFarbaOnIndex(index);
+    zoznamMravcov[j].posunVpred();
 }

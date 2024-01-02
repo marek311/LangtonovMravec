@@ -6,5 +6,5 @@ int main() {
     std::srand(std::time(nullptr));
 
     Simulacia s;
-    s.simuluj(5,5,1,5,1, 0);
+    s.simuluj(10,10,3,10,0,0);
 }
