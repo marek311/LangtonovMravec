@@ -111,4 +111,7 @@ void Simulacia::simulujKrok(int j, int logika) {
 
     plocha.zmenFarbaOnIndex(index);
     zoznamMravcov[j].posunVpred();
+
+    //nie vzdy v poradi - podla mna spravne funguju threads
+    //std::cout << j << "\n";
 }
