@@ -27,6 +27,7 @@ public:
     void vypisPlochu();
     Pole getPoleOnIndex(int index);
     void zmenFarbaOnIndex(int index);
+    int getVelkostPlochy() const { return plocha.size(); };
 };
 
 #endif //LANGTONOVMRAVEC_PLOCHA_H

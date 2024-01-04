@@ -68,6 +68,7 @@ void Simulacia::simulujKrok(int j, int logika) {
 
     int color = plocha.getPoleOnIndex(index).getFarba();
 
+    /*
     if (logika == 0) {
         if (color == 0)
             zoznamMravcov[j].otocVpravo();
@@ -79,6 +80,7 @@ void Simulacia::simulujKrok(int j, int logika) {
         if (color == 1)
             zoznamMravcov[j].otocVpravo();
     }
+     */
 
     plocha.zmenFarbaOnIndex(index);
     zoznamMravcov[j].posunVpred();
@@ -116,7 +118,14 @@ void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int 
         vypisPlochuMravcov();
 
         std::cout << "\n";
+        //std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     }
+
+    for (int i = 0; i < plocha.getVelkostPlochy(); i++) {
+
+        if(isAntOnIndex(i)) std::cout << i << "\n";
+    }
+
 }
 
 bool Simulacia::isAntOnIndex(int index) {
