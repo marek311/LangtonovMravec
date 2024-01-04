@@ -66,7 +66,7 @@ void Simulacia::simulujKrok(int j, int logika) {
 
     int index = mravecY * width + mravecX;
 
-    std::cout << "\n" << index;
+    //std::cout << "\n" << index;
 
     int color = plocha.getPoleOnIndex(index).getFarba();
 
