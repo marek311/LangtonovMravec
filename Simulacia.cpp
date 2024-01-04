@@ -72,7 +72,7 @@ void Simulacia::simulujKrok(int j, int logika) {
 
         for (int k = 0; k < zoznamMravcov.size(); ++k) {
 
-            if (k != j) {
+            if (k != j && !zoznamMravcov[k].isDisabled()) {
                 int wrappedX = (zoznamMravcov[k].getPolohaX() + width) % width;
                 int wrappedY = (zoznamMravcov[k].getPolohaY() + height) % height;
 
