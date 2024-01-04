@@ -44,7 +44,6 @@ void Plocha::plochaManual() {
 void Plocha::plochaSubor(const std::string &nazovSuboru) {
 
     std::ifstream subor(nazovSuboru);
-
     if (!subor.is_open()) {
         std::cerr << "Chyba pri otvarani suboru!" << std::endl;
         return;
