@@ -14,12 +14,11 @@ private:
     std::vector<Pole> plocha;
     void plochaRandom();
     void plochaManual();
-    void nacitajPlochuZoSuboru(const std::string& nazovSuboru);
+    void plochaSubor(const std::string& nazovSuboru);
 
 public:
     Plocha() {}
     Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManualOrFile);
-    Plocha(const std::string& nazovSuboru) { nacitajPlochuZoSuboru(nazovSuboru); }
     int getSirka() const;
     int getVyska() const;
     void setSirka(int sirka);

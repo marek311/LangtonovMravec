@@ -42,7 +42,7 @@ void Plocha::plochaManual() {
     }
 }
 
-void Plocha::nacitajPlochuZoSuboru(const std::string &nazovSuboru) {
+void Plocha::plochaSubor(const std::string &nazovSuboru) {
 
     std::ifstream subor(nazovSuboru);
 
@@ -76,7 +76,7 @@ Plocha::Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManualOrFile) {
     if(randomOrManualOrFile == 1) plochaManual();
 
     //2 = file
-    if(randomOrManualOrFile == 2) Plocha("C:\\Users\\marek\\Desktop\\grid2.txt");
+    if(randomOrManualOrFile == 2) plochaSubor("C:\\Users\\marek\\Desktop\\grid2.txt");
 }
 
 int Plocha::getSirka() const {

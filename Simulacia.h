@@ -21,7 +21,7 @@ private:
 
 public:
     Simulacia() {}
-    void simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int pocetKrokov, int logika, int randomOrManual);
+    void simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int pocetKrokov, int logika, int randomOrManualOrFile);
 };
 
 #endif //LANGTONOVMRAVEC_SIMULACIA_H
