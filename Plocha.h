@@ -11,17 +11,17 @@ private:
     int sirka;
     int vyska;
     std::vector<Pole> plocha;
+    void plochaRandom();
+    void plochaManual();
 
 public:
     Plocha() {}
     Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManual);
-    void plochaRandom();
-    void plochaManual();
-    void vypisPlochu();
     int getSirka() const;
-    void setSirka(int sirka);
     int getVyska() const;
+    void setSirka(int sirka);
     void setVyska(int vyska);
+    void vypisPlochu();
     Pole getPoleOnIndex(int index);
     void zmenFarbaOnIndex(int index);
 };

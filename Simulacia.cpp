@@ -55,6 +55,36 @@ void Simulacia::vypisPlochuMravcov() {
     for (int i = 0; i < (plocha.getVyska() * 2) - 1; i++) { std::cout << "-"; }
 }
 
+void Simulacia::simulujKrok(int j, int logika) {
+
+    std::lock_guard<std::mutex> lock(mutex);
+
+    int mravecX = zoznamMravcov[j].getPolohaX();
+    int mravecY = zoznamMravcov[j].getPolohaY();
+
+    int index = mravecY * plocha.getSirka() + mravecX;
+
+    int color = plocha.getPoleOnIndex(index).getFarba();
+
+    if (logika == 0) {
+        if (color == 0)
+            zoznamMravcov[j].otocVpravo();
+        if (color == 1)
+            zoznamMravcov[j].otocVlavo();
+    } else if (logika == 1) {
+        if (color == 0)
+            zoznamMravcov[j].otocVlavo();
+        if (color == 1)
+            zoznamMravcov[j].otocVpravo();
+    }
+
+    plocha.zmenFarbaOnIndex(index);
+    zoznamMravcov[j].posunVpred();
+
+    //nie vzdy v poradi - podla mna spravne funguju threads
+    //std::cout << j << "\n";
+}
+
 void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int pocetKrokov, int logika, int randomOrManual) {
 
     //LOGIKA
@@ -84,34 +114,4 @@ void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int 
         std::cout << "\n";
         //std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     }
-}
-
-void Simulacia::simulujKrok(int j, int logika) {
-
-    std::lock_guard<std::mutex> lock(mutex);
-
-    int mravecX = zoznamMravcov[j].getPolohaX();
-    int mravecY = zoznamMravcov[j].getPolohaY();
-
-    int index = mravecY * plocha.getSirka() + mravecX;
-
-    int color = plocha.getPoleOnIndex(index).getFarba();
-
-    if (logika == 0) {
-        if (color == 0)
-            zoznamMravcov[j].otocVpravo();
-        if (color == 1)
-            zoznamMravcov[j].otocVlavo();
-    } else if (logika == 1) {
-        if (color == 0)
-            zoznamMravcov[j].otocVlavo();
-        if (color == 1)
-            zoznamMravcov[j].otocVpravo();
-    }
-
-    plocha.zmenFarbaOnIndex(index);
-    zoznamMravcov[j].posunVpred();
-
-    //nie vzdy v poradi - podla mna spravne funguju threads
-    //std::cout << j << "\n";
 }

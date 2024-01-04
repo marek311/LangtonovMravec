@@ -17,11 +17,11 @@ private:
     void inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int randomOrManual);
     void pridajMravca();
     void vypisPlochuMravcov();
+    void simulujKrok(int j, int logika);
 
 public:
     Simulacia() {}
     void simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int pocetKrokov, int logika, int randomOrManual);
-    void simulujKrok(int j, int logika);
 };
 
 #endif //LANGTONOVMRAVEC_SIMULACIA_H

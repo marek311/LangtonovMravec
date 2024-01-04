@@ -1,15 +1,5 @@
 #include "Plocha.h"
 
-Plocha::Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManual) {
-    sirka = sirkaPlochy;
-    vyska = vyskaPlochy;
-
-    //0 = random
-    //1 = manual
-    if(randomOrManual == 0) plochaRandom();
-    if(randomOrManual == 1) plochaManual();
-}
-
 void Plocha::plochaRandom() {
     int pocetPoli = sirka * vyska;
     for(int i = 0; i < pocetPoli; i++) {
@@ -52,6 +42,32 @@ void Plocha::plochaManual() {
     }
 }
 
+Plocha::Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManual) {
+    sirka = sirkaPlochy;
+    vyska = vyskaPlochy;
+
+    //0 = random
+    //1 = manual
+    if(randomOrManual == 0) plochaRandom();
+    if(randomOrManual == 1) plochaManual();
+}
+
+int Plocha::getSirka() const {
+    return sirka;
+}
+
+int Plocha::getVyska() const {
+    return vyska;
+}
+
+void Plocha::setSirka(int sirka) {
+    Plocha::sirka = sirka;
+}
+
+void Plocha::setVyska(int vyska) {
+    Plocha::vyska = vyska;
+}
+
 void Plocha::vypisPlochu() {
 
     std::cout << "\n";
@@ -73,22 +89,6 @@ void Plocha::vypisPlochu() {
 
     std::cout << "\n";
     for (int i = 0; i < (sirka * 2) - 1; i++) { std::cout << "-"; }
-}
-
-int Plocha::getSirka() const {
-    return sirka;
-}
-
-void Plocha::setSirka(int sirka) {
-    Plocha::sirka = sirka;
-}
-
-int Plocha::getVyska() const {
-    return vyska;
-}
-
-void Plocha::setVyska(int vyska) {
-    Plocha::vyska = vyska;
 }
 
 Pole Plocha::getPoleOnIndex(int index) {
