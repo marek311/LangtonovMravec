@@ -28,31 +28,39 @@ void Simulacia::vypisPlochuMravcov() {
     for (int i = 0; i < (plocha.getSirka() * 2) - 1; i++) { std::cout << "-"; }
     std::cout << "\n";
 
-    int pocetPoli = plocha.getSirka() * plocha.getVyska();
-    for (int i = 0; i < pocetPoli; i++) {
+    int width = plocha.getSirka();
+    int height = plocha.getVyska();
 
-        // Koniec riadku -> novy riadok
-        if (i > 0 && i % plocha.getSirka() == 0) std::cout << "\n";
+    for (int y = 0; y < height; y++) {
 
-        // Nie koniec riadku -> oddelovac
-        if (i % plocha.getSirka() != 0) std::cout << "|";
+        for (int x = 0; x < width; x++) {
 
-        bool mravecFound = false;
+            // Oddelovac
+            if (x > 0) std::cout << "|";
 
-        for (int j = 0; j < zoznamMravcov.size(); j++) {
+            bool mravecFound = false;
 
-            if (zoznamMravcov[j].getPolohaX() == i % plocha.getVyska() &&
-                zoznamMravcov[j].getPolohaY() == i / plocha.getSirka()) {
-                std::cout << "M";
-                mravecFound = true;
-                break;
+            for (int j = 0; j < zoznamMravcov.size(); j++) {
+
+                int wrappedX = (zoznamMravcov[j].getPolohaX() + width) % width;
+                int wrappedY = (zoznamMravcov[j].getPolohaY() + height) % height;
+
+                if (wrappedX == x && wrappedY == y) {
+                    std::cout << "M";
+                    mravecFound = true;
+                    break;
+                }
             }
+
+            if (!mravecFound) std::cout << ".";
         }
-        if (!mravecFound) std::cout << ".";
+
+        std::cout << "\n";
     }
 
+    for (int i = 0; i < (height * 2) - 1; i++) { std::cout << "-"; }
     std::cout << "\n";
-    for (int i = 0; i < (plocha.getVyska() * 2) - 1; i++) { std::cout << "-"; }
+
 }
 
 void Simulacia::simulujKrok(int j, int logika) {
@@ -62,10 +70,19 @@ void Simulacia::simulujKrok(int j, int logika) {
     int mravecX = zoznamMravcov[j].getPolohaX();
     int mravecY = zoznamMravcov[j].getPolohaY();
 
-    int index = mravecY * plocha.getSirka() + mravecX;
+    int width = plocha.getSirka();
+    int height = plocha.getVyska();
+
+    mravecX = (mravecX + width) % width;
+    mravecY = (mravecY + height) % height;
+
+    int index = mravecY * width + mravecX;
+
+    std::cout << "\n" << index;
 
     int color = plocha.getPoleOnIndex(index).getFarba();
 
+    /*
     if (logika == 0) {
         if (color == 0)
             zoznamMravcov[j].otocVpravo();
@@ -77,13 +94,14 @@ void Simulacia::simulujKrok(int j, int logika) {
         if (color == 1)
             zoznamMravcov[j].otocVpravo();
     }
+     */
 
     plocha.zmenFarbaOnIndex(index);
     zoznamMravcov[j].posunVpred();
 
-    //nie vzdy v poradi - podla mna spravne funguju threads
     //std::cout << j << "\n";
 }
+
 
 void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int pocetKrokov, int logika, int randomOrManual) {
 
@@ -96,15 +114,18 @@ void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int 
     vypisPlochuMravcov();
 
     for (int i = 0; i < pocetKrokov; ++i) {
-        std::vector<std::thread> threads;
+
+        //std::vector<std::thread> threads;
 
         for (int j = 0; j < zoznamMravcov.size(); ++j) {
-            threads.emplace_back(&Simulacia::simulujKrok, this, j, logika);
+
+            //threads.emplace_back(&Simulacia::simulujKrok, this, j, logika);
+            simulujKrok(j, logika);
         }
 
-        for (auto &thread : threads) {
-            thread.join();
-        }
+        //for (auto &thread : threads) {
+            //thread.join();
+        //}
 
         std::cout << "\n" << "\n";
         std::cout << "Krok: " << i;

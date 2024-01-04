@@ -92,9 +92,9 @@ void Plocha::vypisPlochu() {
 }
 
 Pole Plocha::getPoleOnIndex(int index) {
-    return plocha[index];
+    if(index < plocha.size()) return plocha[index];
 }
 
 void Plocha::zmenFarbaOnIndex(int index) {
-    plocha[index].zmenFarba();
+    if(index < plocha.size()) plocha[index].zmenFarba();
 }
