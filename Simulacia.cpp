@@ -3,20 +3,14 @@
 void Simulacia::inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int randomOrManual) {
 
     plocha = Plocha(sirkaPlochy,vyskaPlochy, randomOrManual);
-
-    for (int i = 0; i < pocetMravcov; ++i)
-        pridajMravca();
+    for (int i = 0; i < pocetMravcov; ++i) pridajMravca();
 
 }
 
 void Simulacia::pridajMravca() {
 
-    //int startx = std::rand() % plocha.getSirka();
-    //int starty = std::rand() % plocha.getVyska();
-
-    //toto je iba kvoli tomu aby sa mravce nespawnli na kraji plochy:
-    int startx = 2 + std::rand() % (plocha.getSirka() - 4);
-    int starty = 2 + std::rand() % (plocha.getVyska() - 4);
+    int startx = std::rand() % plocha.getSirka();
+    int starty = std::rand() % plocha.getVyska();
 
     Mravec mravecNovy(startx, starty);
     zoznamMravcov.push_back(mravecNovy);
@@ -35,11 +29,9 @@ void Simulacia::vypisPlochuMravcov() {
 
         for (int x = 0; x < width; x++) {
 
-            // Oddelovac
             if (x > 0) std::cout << "|";
 
             bool mravecFound = false;
-
             for (int j = 0; j < zoznamMravcov.size(); j++) {
 
                 int wrappedX = (zoznamMravcov[j].getPolohaX() + width) % width;
@@ -51,16 +43,13 @@ void Simulacia::vypisPlochuMravcov() {
                     break;
                 }
             }
-
             if (!mravecFound) std::cout << ".";
         }
-
         std::cout << "\n";
     }
 
     for (int i = 0; i < (height * 2) - 1; i++) { std::cout << "-"; }
     std::cout << "\n";
-
 }
 
 void Simulacia::simulujKrok(int j, int logika) {
@@ -82,7 +71,6 @@ void Simulacia::simulujKrok(int j, int logika) {
 
     int color = plocha.getPoleOnIndex(index).getFarba();
 
-    /*
     if (logika == 0) {
         if (color == 0)
             zoznamMravcov[j].otocVpravo();
@@ -94,12 +82,9 @@ void Simulacia::simulujKrok(int j, int logika) {
         if (color == 1)
             zoznamMravcov[j].otocVpravo();
     }
-     */
 
     plocha.zmenFarbaOnIndex(index);
     zoznamMravcov[j].posunVpred();
-
-    //std::cout << j << "\n";
 }
 
 
