@@ -100,17 +100,17 @@ void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int 
 
     for (int i = 0; i < pocetKrokov; ++i) {
 
-        //std::vector<std::thread> threads;
+        std::vector<std::thread> threads;
 
         for (int j = 0; j < zoznamMravcov.size(); ++j) {
 
-            //threads.emplace_back(&Simulacia::simulujKrok, this, j, logika);
-            simulujKrok(j, logika);
+            threads.emplace_back(&Simulacia::simulujKrok, this, j, logika);
+            //simulujKrok(j, logika);
         }
 
-        //for (auto &thread : threads) {
-            //thread.join();
-        //}
+        for (auto &thread : threads) {
+            thread.join();
+        }
 
         std::cout << "\n" << "\n";
         std::cout << "Krok: " << i;
