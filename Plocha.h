@@ -18,7 +18,7 @@ private:
 
 public:
     Plocha() {}
-    Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManual);
+    Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManualOrFile);
     Plocha(const std::string& nazovSuboru) { nacitajPlochuZoSuboru(nazovSuboru); }
     int getSirka() const;
     int getVyska() const;

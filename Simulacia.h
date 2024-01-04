@@ -14,7 +14,7 @@ private:
     std::mutex mutex;
     Plocha plocha;
     std::vector<Mravec> zoznamMravcov;
-    void inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int randomOrManual);
+    void inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int randomOrManualOrFile);
     void pridajMravca();
     void vypisPlochuMravcov();
     void simulujKrok(int j, int logika);

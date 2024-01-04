@@ -65,14 +65,18 @@ void Plocha::nacitajPlochuZoSuboru(const std::string &nazovSuboru) {
     subor.close();
 }
 
-Plocha::Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManual) {
+Plocha::Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManualOrFile) {
     sirka = sirkaPlochy;
     vyska = vyskaPlochy;
 
     //0 = random
+    if(randomOrManualOrFile == 0) plochaRandom();
+
     //1 = manual
-    if(randomOrManual == 0) plochaRandom();
-    if(randomOrManual == 1) plochaManual();
+    if(randomOrManualOrFile == 1) plochaManual();
+
+    //2 = file
+    if(randomOrManualOrFile == 2) Plocha("C:\\Users\\marek\\Desktop\\grid2.txt");
 }
 
 int Plocha::getSirka() const {

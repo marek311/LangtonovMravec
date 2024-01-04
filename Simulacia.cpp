@@ -1,16 +1,9 @@
 #include "Simulacia.h"
 
-void Simulacia::inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int randomOrManual) {
+void Simulacia::inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int randomOrManualOrFile) {
 
-    //plocha = Plocha(sirkaPlochy,vyskaPlochy, randomOrManual);
-    //for (int i = 0; i < pocetMravcov; ++i) pridajMravca();
-
-
-
-    plocha = Plocha("C:\\Users\\marek\\Desktop\\LangtonovMravec\\grid.txt");
+    plocha = Plocha(sirkaPlochy,vyskaPlochy, randomOrManualOrFile);
     for (int i = 0; i < pocetMravcov; ++i) pridajMravca();
-
-
 }
 
 void Simulacia::pridajMravca() {
@@ -94,13 +87,13 @@ void Simulacia::simulujKrok(int j, int logika) {
 }
 
 
-void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int pocetKrokov, int logika, int randomOrManual) {
+void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int pocetKrokov, int logika, int randomOrManualOrFile) {
 
     //LOGIKA
     //0 = priama
     //1 = inverzna
 
-    inicializuj(sirkaPlochy, vyskaPlochy, pocetMravcov, randomOrManual);
+    inicializuj(sirkaPlochy, vyskaPlochy, pocetMravcov, randomOrManualOrFile);
     plocha.vypisPlochu();
     vypisPlochuMravcov();
 
