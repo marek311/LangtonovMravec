@@ -4,7 +4,6 @@ void Simulacia::inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, 
 
     plocha = Plocha(sirkaPlochy,vyskaPlochy, randomOrManual);
     for (int i = 0; i < pocetMravcov; ++i) pridajMravca();
-
 }
 
 void Simulacia::pridajMravca() {
@@ -98,19 +97,20 @@ void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int 
     plocha.vypisPlochu();
     vypisPlochuMravcov();
 
-    for (int i = 0; i < pocetKrokov; ++i) {
+    std::vector<std::thread> zoznamKrokovVlakna;
 
-        std::vector<std::thread> threads;
+    for (int i = 0; i < pocetKrokov; ++i) {
 
         for (int j = 0; j < zoznamMravcov.size(); ++j) {
 
-            threads.emplace_back(&Simulacia::simulujKrok, this, j, logika);
+            zoznamKrokovVlakna.emplace_back(&Simulacia::simulujKrok, this, j, logika);
             //simulujKrok(j, logika);
         }
 
-        for (auto &thread : threads) {
+        for (auto &thread : zoznamKrokovVlakna) {
             thread.join();
         }
+        zoznamKrokovVlakna.clear();
 
         std::cout << "\n" << "\n";
         std::cout << "Krok: " << i;
