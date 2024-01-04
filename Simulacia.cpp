@@ -2,8 +2,15 @@
 
 void Simulacia::inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int randomOrManual) {
 
-    plocha = Plocha(sirkaPlochy,vyskaPlochy, randomOrManual);
+    //plocha = Plocha(sirkaPlochy,vyskaPlochy, randomOrManual);
+    //for (int i = 0; i < pocetMravcov; ++i) pridajMravca();
+
+
+
+    plocha = Plocha("C:\\Users\\marek\\Desktop\\LangtonovMravec\\grid.txt");
     for (int i = 0; i < pocetMravcov; ++i) pridajMravca();
+
+
 }
 
 void Simulacia::pridajMravca() {

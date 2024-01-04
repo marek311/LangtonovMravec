@@ -42,6 +42,29 @@ void Plocha::plochaManual() {
     }
 }
 
+void Plocha::nacitajPlochuZoSuboru(const std::string &nazovSuboru) {
+
+    std::ifstream subor(nazovSuboru);
+
+    if (!subor.is_open()) {
+        std::cerr << "Chyba pri otvarani suboru!" << std::endl;
+        return;
+    }
+
+    subor >> sirka >> vyska;
+    plocha.clear();
+
+    for (int i = 0; i < vyska; ++i) {
+        for (int j = 0; j < sirka; ++j) {
+            int cislo;
+            subor >> cislo;
+            Pole vytvaranePole(cislo);
+            plocha.push_back(vytvaranePole);
+        }
+    }
+    subor.close();
+}
+
 Plocha::Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManual) {
     sirka = sirkaPlochy;
     vyska = vyskaPlochy;
