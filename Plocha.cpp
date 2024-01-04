@@ -10,7 +10,6 @@ void Plocha::plochaRandom() {
 }
 
 void Plocha::plochaManual() {
-
     int pocetPoli = sirka * vyska;
     for(int i = 0; i < pocetPoli; i++) {
         int cislo = 0;

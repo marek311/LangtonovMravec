@@ -36,7 +36,7 @@ void Simulacia::vypisPlochuMravcov() {
                 int wrappedX = (zoznamMravcov[j].getPolohaX() + width) % width;
                 int wrappedY = (zoznamMravcov[j].getPolohaY() + height) % height;
 
-                if (wrappedX == x && wrappedY == y) {
+                if (wrappedX == x && wrappedY == y && !zoznamMravcov[j].isDisabled()) {
                     std::cout << "M";
                     mravecFound = true;
                     break;
@@ -68,7 +68,22 @@ void Simulacia::simulujKrok(int j, int logika) {
 
     int color = plocha.getPoleOnIndex(index).getFarba();
 
-    /*
+    if (!zoznamMravcov[j].isDisabled()) {
+
+        for (int k = 0; k < zoznamMravcov.size(); ++k) {
+
+            if (k != j) {
+                int wrappedX = (zoznamMravcov[k].getPolohaX() + width) % width;
+                int wrappedY = (zoznamMravcov[k].getPolohaY() + height) % height;
+
+                if (wrappedX == mravecX && wrappedY == mravecY) {
+                    zoznamMravcov[j].setDisabled(true);
+                    break;
+                }
+            }
+        }
+    }
+
     if (logika == 0) {
         if (color == 0)
             zoznamMravcov[j].otocVpravo();
@@ -80,7 +95,6 @@ void Simulacia::simulujKrok(int j, int logika) {
         if (color == 1)
             zoznamMravcov[j].otocVpravo();
     }
-     */
 
     plocha.zmenFarbaOnIndex(index);
     zoznamMravcov[j].posunVpred();
@@ -121,9 +135,8 @@ void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int 
         //std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     }
 
-    for (int i = 0; i < plocha.getVelkostPlochy(); i++) {
-
-        if(isAntOnIndex(i)) std::cout << i << "\n";
+    for (int i = 0; i < zoznamMravcov.size(); i++) {
+        std::cout << zoznamMravcov[i].isDisabled() << "\n";
     }
 
 }
