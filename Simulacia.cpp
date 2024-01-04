@@ -37,7 +37,12 @@ void Simulacia::vypisPlochuMravcov() {
                 int wrappedY = (zoznamMravcov[j].getPolohaY() + height) % height;
 
                 if (wrappedX == x && wrappedY == y && !zoznamMravcov[j].isDisabled()) {
-                    std::cout << "M";
+
+                    if(zoznamMravcov[j].getSmer() == 0) std::cout << "^";
+                    if(zoznamMravcov[j].getSmer() == 1) std::cout << ">";
+                    if(zoznamMravcov[j].getSmer() == 2) std::cout << "v";
+                    if(zoznamMravcov[j].getSmer() == 3) std::cout << "<";
+
                     mravecFound = true;
                     break;
                 }
@@ -78,7 +83,6 @@ void Simulacia::simulujKrok(int j, int logika) {
 
                 if (wrappedX == mravecX && wrappedY == mravecY) {
                     zoznamMravcov[j].setDisabled(true);
-                    break;
                 }
             }
         }
@@ -134,11 +138,6 @@ void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int 
         std::cout << "\n";
         //std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     }
-
-    for (int i = 0; i < zoznamMravcov.size(); i++) {
-        std::cout << zoznamMravcov[i].isDisabled() << "\n";
-    }
-
 }
 
 bool Simulacia::isAntOnIndex(int index) {
