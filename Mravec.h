@@ -9,6 +9,7 @@ private:
     int polohaX;
     int polohaY;
     int smer; // 0 = hore | 1 = vpravo | 2 = dole | 3 = vľavo
+    bool disabled = false;
 
 public:
     Mravec() {}
@@ -18,6 +19,8 @@ public:
     int getSmer() const;
     void setPolohaX(int polohaX);
     void setPolohaY(int polohaY);
+    bool isDisabled() const;
+    void setDisabled(bool disabled);
     void setSmer(int smer);
     void otocVpravo();
     void otocVlavo();

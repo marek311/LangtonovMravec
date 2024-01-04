@@ -18,6 +18,7 @@ private:
     void pridajMravca();
     void vypisPlochuMravcov();
     void simulujKrok(int j, int logika);
+    bool isAntOnIndex(int index);
 
 public:
     Simulacia() {}

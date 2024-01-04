@@ -116,6 +116,24 @@ void Simulacia::simuluj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int 
         vypisPlochuMravcov();
 
         std::cout << "\n";
-        //std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     }
+}
+
+bool Simulacia::isAntOnIndex(int index) {
+
+    int width = plocha.getSirka();
+    int height = plocha.getVyska();
+
+    int x = index % width;
+    int y = index / width;
+
+    for (int j = 0; j < zoznamMravcov.size(); ++j) {
+        int wrappedX = (zoznamMravcov[j].getPolohaX() + width) % width;
+        int wrappedY = (zoznamMravcov[j].getPolohaY() + height) % height;
+
+        if (wrappedX == x && wrappedY == y && !zoznamMravcov[j].isDisabled()) {
+            return true;
+        }
+    }
+    return false;
 }

@@ -21,6 +21,7 @@ public:
     Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManualOrFile);
     int getSirka() const;
     int getVyska() const;
+    int getVelkostPlochy() const { return plocha.size(); };
     void setSirka(int sirka);
     void setVyska(int vyska);
     void vypisPlochu();

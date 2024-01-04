@@ -44,3 +44,11 @@ void Mravec::vypis() {
     std::cout << "Poloha Y:" << polohaY << "\n";
     std::cout << "Smer:" << smer << "\n" << "\n";
 }
+
+bool Mravec::isDisabled() const {
+    return disabled;
+}
+
+void Mravec::setDisabled(bool disabled) {
+    Mravec::disabled = disabled;
+}
