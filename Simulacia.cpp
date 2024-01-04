@@ -2,7 +2,7 @@
 
 void Simulacia::inicializuj(int sirkaPlochy, int vyskaPlochy, int pocetMravcov, int randomOrManualOrFile) {
 
-    plocha = Plocha(sirkaPlochy,vyskaPlochy, randomOrManualOrFile);
+    plocha = Plocha(sirkaPlochy, vyskaPlochy, randomOrManualOrFile);
     for (int i = 0; i < pocetMravcov; ++i) pridajMravca();
 }
 
@@ -65,8 +65,6 @@ void Simulacia::simulujKrok(int j, int logika) {
     mravecY = (mravecY + height) % height;
 
     int index = mravecY * width + mravecX;
-
-    //std::cout << "\n" << index;
 
     int color = plocha.getPoleOnIndex(index).getFarba();
 
