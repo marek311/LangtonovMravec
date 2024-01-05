@@ -28,7 +28,7 @@ void Simulacia::vypisPlochuMravcov() {
         std::cout << "\n";
     }
 
-    vypisHorizontalLine(plocha.getVyska());
+    vypisHorizontalLine(plocha.getSirka());
     std::cout << "\n";
 }
 
@@ -39,8 +39,8 @@ void Simulacia::simulujKrok(int j, int logika) {
     int mravecX = zoznamMravcov[j].getPolohaX();
     int mravecY = zoznamMravcov[j].getPolohaY();
 
-    mravecX = (mravecX + plocha.getSirka()) % plocha.getSirka();
-    mravecY = (mravecY + plocha.getVyska()) % plocha.getVyska();
+    mravecX = (mravecX % plocha.getSirka() + plocha.getSirka()) % plocha.getSirka();
+    mravecY = (mravecY % plocha.getVyska() + plocha.getVyska()) % plocha.getVyska();
 
     int index = mravecY * plocha.getSirka() + mravecX;
 
