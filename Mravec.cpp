@@ -52,3 +52,10 @@ bool Mravec::isDisabled() const {
 void Mravec::setDisabled(bool disabled) {
     Mravec::disabled = disabled;
 }
+
+void Mravec::vypisSmer() {
+    if(smer == 0) std::cout << "^";
+    if(smer == 1) std::cout << ">";
+    if(smer == 2) std::cout << "v";
+    if(smer == 3) std::cout << "<";
+}

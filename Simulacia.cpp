@@ -38,10 +38,7 @@ void Simulacia::vypisPlochuMravcov() {
 
                 if (wrappedX == x && wrappedY == y && !zoznamMravcov[j].isDisabled()) {
 
-                    if(zoznamMravcov[j].getSmer() == 0) std::cout << "^";
-                    if(zoznamMravcov[j].getSmer() == 1) std::cout << ">";
-                    if(zoznamMravcov[j].getSmer() == 2) std::cout << "v";
-                    if(zoznamMravcov[j].getSmer() == 3) std::cout << "<";
+                    zoznamMravcov[j].vypisSmer();
 
                     mravecFound = true;
                     break;

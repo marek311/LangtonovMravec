@@ -28,6 +28,7 @@ public:
     void otocVlavo();
     void posunVpred();
     void vypis();
+    void vypisSmer();
 };
 
 #endif //LANGTONOVMRAVEC_MRAVEC_H
