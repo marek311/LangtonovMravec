@@ -1,6 +1,6 @@
 #include "Plocha.h"
 
-void Plocha::plochaRandom() {
+void Plocha::vytvorPlochuRandom() {
     int pocetPoli = sirka * vyska;
     for(int i = 0; i < pocetPoli; i++) {
         int cislo = std::rand() % 2;
@@ -9,7 +9,7 @@ void Plocha::plochaRandom() {
     }
 }
 
-void Plocha::plochaManual() {
+void Plocha::vytvorPlochuManual() {
     int pocetPoli = sirka * vyska;
     for(int i = 0; i < pocetPoli; i++) {
         int cislo = 0;
@@ -41,7 +41,16 @@ void Plocha::plochaManual() {
     }
 }
 
-void Plocha::plochaSubor(const std::string &nazovSuboru) {
+void Plocha::vytvorPlochuSubor() {
+
+    std::string nazovSuboru;
+
+    std::cout << "Zadajte absolutnu cestu k suboru z ktoreho chcete nacitat rozlozenie plochy:" << "\n";
+    std::cout << "Absolutna cesta: ";
+    std::cin >> nazovSuboru;
+    std::cin.clear();
+
+    std::cout << nazovSuboru << "\n";
 
     std::ifstream subor(nazovSuboru);
     if (!subor.is_open()) {
@@ -68,13 +77,13 @@ Plocha::Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManualOrFile) {
     vyska = vyskaPlochy;
 
     //0 = random
-    if(randomOrManualOrFile == 0) plochaRandom();
+    if(randomOrManualOrFile == 0) vytvorPlochuRandom();
 
     //1 = manual
-    if(randomOrManualOrFile == 1) plochaManual();
+    if(randomOrManualOrFile == 1) vytvorPlochuManual();
 
     //2 = file
-    if(randomOrManualOrFile == 2) plochaSubor("C:\\Users\\marek\\Desktop\\grid2.txt");
+    if(randomOrManualOrFile == 2) vytvorPlochuSubor();
 }
 
 int Plocha::getSirka() const {

@@ -12,9 +12,9 @@ private:
     int sirka;
     int vyska;
     std::vector<Pole> plocha;
-    void plochaRandom();
-    void plochaManual();
-    void plochaSubor(const std::string& nazovSuboru);
+    void vytvorPlochuRandom();
+    void vytvorPlochuManual();
+    void vytvorPlochuSubor();
 
 public:
     Plocha() {}
