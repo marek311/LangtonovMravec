@@ -1,13 +1,11 @@
 #include "Simulacia.h"
 
 void Simulacia::inicializuj(int randomOrManualOrFile) {
-
     plocha = Plocha(randomOrManualOrFile);
     readNumOfAntsAndInicializeAnts();
 }
 
 void Simulacia::pridajMravca() {
-
     int startx = std::rand() % plocha.getSirka();
     int starty = std::rand() % plocha.getVyska();
     Mravec mravecNovy(startx, starty);
@@ -51,8 +49,6 @@ void Simulacia::simulujKrok(int j, int logika) {
 
     zoznamMravcov[j].setPolohaX((zoznamMravcov[j].getPolohaX() + plocha.getSirka()) % plocha.getSirka());
     zoznamMravcov[j].setPolohaY((zoznamMravcov[j].getPolohaY() + plocha.getVyska()) % plocha.getVyska());
-
-    zoznamMravcov[j].vypis();
 }
 
 void Simulacia::simuluj(int pocetKrokov, int logika, int randomOrManualOrFile) {
