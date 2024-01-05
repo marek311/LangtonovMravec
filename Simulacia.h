@@ -14,7 +14,7 @@ private:
     std::mutex mutex;
     Plocha plocha;
     std::vector<Mravec> zoznamMravcov;
-    void inicializuj(int randomOrManualOrFile);
+    void inicializuj();
     void pridajMravca();
     void vypisPlochuMravcov();
     void simulujKrok(int j, int logika);
@@ -24,10 +24,13 @@ private:
     void vypisAntDirection(int x, int y);
     void vypisHorizontalLine(int length);
     void checkAndDisableAntsAtSamePosition(int currentAntIndex, int x, int y);
+    void nacitajAkaPlocha();
+    int nacitajPocetKrokov();
+    int nacitajLogiku();
 
 public:
     Simulacia() {}
-    void simuluj(int pocetKrokov, int logika, int randomOrManualOrFile);
+    void simuluj();
 };
 
 #endif //LANGTONOVMRAVEC_SIMULACIA_H

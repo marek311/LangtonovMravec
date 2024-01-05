@@ -4,10 +4,10 @@ void Plocha::vytvorPlochuRandom() {
 
     int sirkaNacitana, vyskaNacitana;
 
-    std::cout << "Zadajte rozmery plochy ktora bude vygenerovana RANDOM:" << "\n";
-    std::cout << "Sirka: ";
+    std::cout << "Zadajte rozmery plochy ktora bude vygenerovana RANDOM: \n";
+    std::cout << "Sirka: \n" ;
     std::cin >> sirkaNacitana;
-    std::cout << "Vyska: ";
+    std::cout << "Vyska: \n";
     std::cin >> vyskaNacitana;
 
     if(0 < sirkaNacitana && sirkaNacitana < 50) sirka = sirkaNacitana;
@@ -25,10 +25,10 @@ void Plocha::vytvorPlochuManual() {
 
     int sirkaNacitana, vyskaNacitana;
 
-    std::cout << "Zadajte rozmery plochy ktora bude vygenerovana MANUALNE:" << "\n";
-    std::cout << "Sirka: ";
+    std::cout << "Zadajte rozmery plochy ktora bude vygenerovana MANUALNE: \n";
+    std::cout << "Sirka: \n" ;
     std::cin >> sirkaNacitana;
-    std::cout << "Vyska: ";
+    std::cout << "Vyska: \n";
     std::cin >> vyskaNacitana;
 
     if(0 < sirkaNacitana && sirkaNacitana < 50) sirka = sirkaNacitana;

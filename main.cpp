@@ -6,6 +6,6 @@ int main() {
     std::srand(std::time(nullptr));
 
     Simulacia s;
-    s.simuluj(20,0,0);
+    s.simuluj();
     //TODO:ulozit do suboru svet
 }

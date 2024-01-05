@@ -1,7 +1,7 @@
 #include "Simulacia.h"
 
-void Simulacia::inicializuj(int randomOrManualOrFile) {
-    plocha = Plocha(randomOrManualOrFile);
+void Simulacia::inicializuj() {
+    nacitajAkaPlocha();
     readNumOfAntsAndInicializeAnts();
 }
 
@@ -51,12 +51,14 @@ void Simulacia::simulujKrok(int j, int logika) {
     zoznamMravcov[j].setPolohaY((zoznamMravcov[j].getPolohaY() + plocha.getVyska()) % plocha.getVyska());
 }
 
-void Simulacia::simuluj(int pocetKrokov, int logika, int randomOrManualOrFile) {
+void Simulacia::simuluj() {
     //LOGIKA
     //0 = priama
     //1 = inverzna
 
-    inicializuj(randomOrManualOrFile);
+    inicializuj();
+    int pocetKrokov = nacitajPocetKrokov();
+    int logika = nacitajLogiku();
 
     plocha.vypisPlochu();
     vypisPlochuMravcov();
@@ -168,4 +170,32 @@ void Simulacia::checkAndDisableAntsAtSamePosition(int currentAntIndex, int x, in
             }
         }
     }
+}
+
+void Simulacia::nacitajAkaPlocha() {
+
+    int randomOrManualOrFile;
+    std::cout << "Zadajte cislo: \n";
+    std::cout << "0:RANDOM \n";
+    std::cout << "1:MANUAL \n";
+    std::cout << "2:FILE \n";
+    std::cin >> randomOrManualOrFile;
+
+    plocha = Plocha(randomOrManualOrFile);
+}
+
+int Simulacia::nacitajPocetKrokov() {
+    int numSteps;
+    std::cout << "Zadajte pocet krokov:";
+    std::cin >> numSteps;
+    return numSteps;
+}
+
+int Simulacia::nacitajLogiku() {
+    int logika;
+    std::cout << "Zadajte logiku: \n";
+    std::cout << "0:PRIAMA \n";
+    std::cout << "1:INVERZNA \n";
+    std::cin >> logika;
+    return logika;
 }
