@@ -1,6 +1,18 @@
 #include "Plocha.h"
 
 void Plocha::vytvorPlochuRandom() {
+
+    int sirkaNacitana, vyskaNacitana;
+
+    std::cout << "Zadajte rozmery plochy ktora bude vygenerovana RANDOM:" << "\n";
+    std::cout << "Sirka: ";
+    std::cin >> sirkaNacitana;
+    std::cout << "Vyska: ";
+    std::cin >> vyskaNacitana;
+
+    if(0 < sirkaNacitana && sirkaNacitana < 50) sirka = sirkaNacitana;
+    if(0 < vyskaNacitana && vyskaNacitana < 50) vyska = vyskaNacitana;
+
     int pocetPoli = sirka * vyska;
     for(int i = 0; i < pocetPoli; i++) {
         int cislo = std::rand() % 2;
@@ -10,6 +22,18 @@ void Plocha::vytvorPlochuRandom() {
 }
 
 void Plocha::vytvorPlochuManual() {
+
+    int sirkaNacitana, vyskaNacitana;
+
+    std::cout << "Zadajte rozmery plochy ktora bude vygenerovana MANUALNE:" << "\n";
+    std::cout << "Sirka: ";
+    std::cin >> sirkaNacitana;
+    std::cout << "Vyska: ";
+    std::cin >> vyskaNacitana;
+
+    if(0 < sirkaNacitana && sirkaNacitana < 50) sirka = sirkaNacitana;
+    if(0 < vyskaNacitana && vyskaNacitana < 50) vyska = vyskaNacitana;
+
     int pocetPoli = sirka * vyska;
     for(int i = 0; i < pocetPoli; i++) {
         int cislo = 0;
