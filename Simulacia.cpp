@@ -17,19 +17,18 @@ void Simulacia::pridajMravca() {
 void Simulacia::vypisPlochuMravcov() {
 
     std::cout << "\n";
-    for (int i = 0; i < (plocha.getSirka() * 2) - 1; i++) { std::cout << "-"; }
-    std::cout << "\n";
+    vypisHorizontalLine(plocha.getSirka());
+
     for (int y = 0; y < plocha.getVyska(); y++) {
 
         for (int x = 0; x < plocha.getSirka(); x++) {
-
             if (x > 0) std::cout << "|";
-
             vypisAntDirection(x,y);
         }
         std::cout << "\n";
     }
-    for (int i = 0; i < (plocha.getVyska() * 2) - 1; i++) { std::cout << "-"; }
+
+    vypisHorizontalLine(plocha.getVyska());
     std::cout << "\n";
 }
 
@@ -48,18 +47,7 @@ void Simulacia::simulujKrok(int j, int logika) {
     int color = plocha.getPoleOnIndex(index).getFarba();
 
     if (!zoznamMravcov[j].isDisabled()) {
-
-        for (int k = 0; k < zoznamMravcov.size(); ++k) {
-
-            if (k != j && !zoznamMravcov[k].isDisabled()) {
-                int wrappedX = (zoznamMravcov[k].getPolohaX() + plocha.getSirka()) % plocha.getSirka();
-                int wrappedY = (zoznamMravcov[k].getPolohaY() + plocha.getVyska()) % plocha.getVyska();
-
-                if (wrappedX == mravecX && wrappedY == mravecY) {
-                    zoznamMravcov[j].setDisabled(true);
-                }
-            }
-        }
+        checkAndDisableAntsAtSamePosition(j, mravecX, mravecY);
     }
 
     otocMravca(logika, color, j);
@@ -95,7 +83,7 @@ void Simulacia::simuluj(int pocetKrokov, int logika, int randomOrManualOrFile) {
 
         std::cout << "\n" << "\n";
         std::cout << "Krok: " << i;
-        plocha.vypisPlochu();
+        //plocha.vypisPlochu();
         vypisPlochuMravcov();
 
         std::cout << "\n";
@@ -160,8 +148,26 @@ void Simulacia::vypisAntDirection(int x, int y) {
         }
     }
 
-    if (!mravecFound) {
-        std::cout << ".";
-    }
+    if (!mravecFound) { std::cout << "."; }
+}
 
+void Simulacia::vypisHorizontalLine(int length) {
+    for (int i = 0; i < (length * 2) - 1; i++) {
+        std::cout << "-";
+    }
+    std::cout << "\n";
+}
+
+void Simulacia::checkAndDisableAntsAtSamePosition(int currentAntIndex, int x, int y) {
+
+    for (int k = 0; k < zoznamMravcov.size(); ++k) {
+        if (k != currentAntIndex && !zoznamMravcov[k].isDisabled()) {
+            int wrappedX = (zoznamMravcov[k].getPolohaX() + plocha.getSirka()) % plocha.getSirka();
+            int wrappedY = (zoznamMravcov[k].getPolohaY() + plocha.getVyska()) % plocha.getVyska();
+
+            if (wrappedX == x && wrappedY == y) {
+                zoznamMravcov[currentAntIndex].setDisabled(true);
+            }
+        }
+    }
 }

@@ -22,6 +22,8 @@ private:
     void readNumOfAntsAndInicializeAnts();
     void otocMravca(int logika, int farbaPola, int indexMravca);
     void vypisAntDirection(int x, int y);
+    void vypisHorizontalLine(int length);
+    void checkAndDisableAntsAtSamePosition(int currentAntIndex, int x, int y);
 
 public:
     Simulacia() {}
