@@ -7,4 +7,5 @@ int main() {
 
     Simulacia s;
     s.simuluj(20,0,0);
+    //TODO:ulozit do suboru svet
 }

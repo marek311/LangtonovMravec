@@ -53,11 +53,15 @@ void Simulacia::simulujKrok(int j, int logika) {
     otocMravca(logika, color, j);
     plocha.zmenFarbaOnIndex(index);
     zoznamMravcov[j].posunVpred();
+
+    zoznamMravcov[j].setPolohaX((zoznamMravcov[j].getPolohaX() + plocha.getSirka()) % plocha.getSirka());
+    zoznamMravcov[j].setPolohaY((zoznamMravcov[j].getPolohaY() + plocha.getVyska()) % plocha.getVyska());
+
+    zoznamMravcov[j].vypis();
 }
 
 
 void Simulacia::simuluj(int pocetKrokov, int logika, int randomOrManualOrFile) {
-
     //LOGIKA
     //0 = priama
     //1 = inverzna
@@ -72,8 +76,10 @@ void Simulacia::simuluj(int pocetKrokov, int logika, int randomOrManualOrFile) {
 
         for (int j = 0; j < zoznamMravcov.size(); ++j) {
 
-            zoznamKrokovVlakna.emplace_back(&Simulacia::simulujKrok, this, j, logika);
-            //simulujKrok(j, logika);
+            if (!zoznamMravcov[j].isDisabled()) {
+                zoznamKrokovVlakna.emplace_back(&Simulacia::simulujKrok, this, j, logika);
+                //simulujKrok(j, logika);
+            }
         }
 
         for (auto &thread : zoznamKrokovVlakna) {
