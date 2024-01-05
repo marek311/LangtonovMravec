@@ -96,9 +96,7 @@ void Plocha::vytvorPlochuSubor() {
     subor.close();
 }
 
-Plocha::Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManualOrFile) {
-    sirka = sirkaPlochy;
-    vyska = vyskaPlochy;
+Plocha::Plocha(int randomOrManualOrFile) {
 
     //0 = random
     if(randomOrManualOrFile == 0) vytvorPlochuRandom();

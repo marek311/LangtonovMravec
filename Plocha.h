@@ -18,7 +18,7 @@ private:
 
 public:
     Plocha() {}
-    Plocha(int sirkaPlochy, int vyskaPlochy, int randomOrManualOrFile);
+    Plocha(int randomOrManualOrFile);
     int getSirka() const;
     int getVyska() const;
     int getVelkostPlochy() const { return plocha.size(); };
