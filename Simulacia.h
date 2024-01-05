@@ -21,6 +21,7 @@ private:
     bool isAntOnIndex(int index);
     void readNumOfAntsAndInicializeAnts();
     void otocMravca(int logika, int farbaPola, int indexMravca);
+    void vypisAntDirection(int x, int y);
 
 public:
     Simulacia() {}

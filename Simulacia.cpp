@@ -25,19 +25,7 @@ void Simulacia::vypisPlochuMravcov() {
 
             if (x > 0) std::cout << "|";
 
-            bool mravecFound = false;
-            for (int j = 0; j < zoznamMravcov.size(); j++) {
-
-                int wrappedX = (zoznamMravcov[j].getPolohaX() + plocha.getSirka()) % plocha.getSirka();
-                int wrappedY = (zoznamMravcov[j].getPolohaY() + plocha.getVyska()) % plocha.getVyska();
-
-                if (wrappedX == x && wrappedY == y && !zoznamMravcov[j].isDisabled()) {
-                    zoznamMravcov[j].vypisSmer();
-                    mravecFound = true;
-                    break;
-                }
-            }
-            if (!mravecFound) std::cout << ".";
+            vypisAntDirection(x,y);
         }
         std::cout << "\n";
     }
@@ -155,4 +143,25 @@ void Simulacia::otocMravca(int logika, int farbaPola, int indexMravca) {
         if (farbaPola == 1)
             zoznamMravcov[indexMravca].otocVpravo();
     }
+}
+
+void Simulacia::vypisAntDirection(int x, int y) {
+
+    bool mravecFound = false;
+
+    for (int j = 0; j < zoznamMravcov.size(); j++) {
+        int wrappedX = (zoznamMravcov[j].getPolohaX() + plocha.getSirka()) % plocha.getSirka();
+        int wrappedY = (zoznamMravcov[j].getPolohaY() + plocha.getVyska()) % plocha.getVyska();
+
+        if (wrappedX == x && wrappedY == y && !zoznamMravcov[j].isDisabled()) {
+            zoznamMravcov[j].vypisSmer();
+            mravecFound = true;
+            break;
+        }
+    }
+
+    if (!mravecFound) {
+        std::cout << ".";
+    }
+
 }
