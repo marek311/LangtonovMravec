@@ -75,7 +75,6 @@ void Simulacia::simulujKrok(int j, int logika) {
     }
 
     otocMravca(logika, color, j);
-
     plocha.zmenFarbaOnIndex(index);
     zoznamMravcov[j].posunVpred();
 }
@@ -145,7 +144,6 @@ void Simulacia::readNumOfAntsAndInicializeAnts() {
 }
 
 void Simulacia::otocMravca(int logika, int farbaPola, int indexMravca) {
-
     if (logika == 0) {
         if (farbaPola == 0)
             zoznamMravcov[indexMravca].otocVpravo();
