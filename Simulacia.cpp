@@ -83,7 +83,7 @@ void Simulacia::simuluj(int pocetKrokov, int logika, int randomOrManualOrFile) {
 
         std::cout << "\n" << "\n";
         std::cout << "Krok: " << i;
-        //plocha.vypisPlochu();
+        plocha.vypisPlochu();
         vypisPlochuMravcov();
 
         std::cout << "\n";
