@@ -39,16 +39,11 @@ void Simulacia::simulujKrok(int j, int logika) {
     int mravecX = zoznamMravcov[j].getPolohaX();
     int mravecY = zoznamMravcov[j].getPolohaY();
 
-    mravecX = (mravecX % plocha.getSirka() + plocha.getSirka()) % plocha.getSirka();
-    mravecY = (mravecY % plocha.getVyska() + plocha.getVyska()) % plocha.getVyska();
-
     int index = mravecY * plocha.getSirka() + mravecX;
 
     int color = plocha.getPoleOnIndex(index).getFarba();
 
-    if (!zoznamMravcov[j].isDisabled()) {
-        checkAndDisableAntsAtSamePosition(j, mravecX, mravecY);
-    }
+    checkAndDisableAntsAtSamePosition(j, mravecX, mravecY);
 
     otocMravca(logika, color, j);
     plocha.zmenFarbaOnIndex(index);
@@ -60,13 +55,13 @@ void Simulacia::simulujKrok(int j, int logika) {
     zoznamMravcov[j].vypis();
 }
 
-
 void Simulacia::simuluj(int pocetKrokov, int logika, int randomOrManualOrFile) {
     //LOGIKA
     //0 = priama
     //1 = inverzna
 
     inicializuj(randomOrManualOrFile);
+
     plocha.vypisPlochu();
     vypisPlochuMravcov();
 
@@ -82,13 +77,14 @@ void Simulacia::simuluj(int pocetKrokov, int logika, int randomOrManualOrFile) {
             }
         }
 
+        std::cout << "\n" << "\n";
+        std::cout << "KROK: " << i << "\n";
+
         for (auto &thread : zoznamKrokovVlakna) {
             thread.join();
         }
         zoznamKrokovVlakna.clear();
 
-        std::cout << "\n" << "\n";
-        std::cout << "Krok: " << i;
         plocha.vypisPlochu();
         vypisPlochuMravcov();
 
