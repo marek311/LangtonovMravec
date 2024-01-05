@@ -14,15 +14,17 @@ private:
     std::mutex mutex;
     Plocha plocha;
     std::vector<Mravec> zoznamMravcov;
-    void inicializuj(int pocetMravcov, int randomOrManualOrFile);
+    void inicializuj(int randomOrManualOrFile);
     void pridajMravca();
     void vypisPlochuMravcov();
     void simulujKrok(int j, int logika);
     bool isAntOnIndex(int index);
+    void readNumOfAntsAndInicializeAnts();
+    void otocMravca(int logika, int farbaPola, int indexMravca);
 
 public:
     Simulacia() {}
-    void simuluj(int pocetMravcov, int pocetKrokov, int logika, int randomOrManualOrFile);
+    void simuluj(int pocetKrokov, int logika, int randomOrManualOrFile);
 };
 
 #endif //LANGTONOVMRAVEC_SIMULACIA_H

@@ -1,16 +1,15 @@
 #include "Simulacia.h"
 
-void Simulacia::inicializuj(int pocetMravcov, int randomOrManualOrFile) {
+void Simulacia::inicializuj(int randomOrManualOrFile) {
 
     plocha = Plocha(randomOrManualOrFile);
-    for (int i = 0; i < pocetMravcov; ++i) pridajMravca();
+    readNumOfAntsAndInicializeAnts();
 }
 
 void Simulacia::pridajMravca() {
 
     int startx = std::rand() % plocha.getSirka();
     int starty = std::rand() % plocha.getVyska();
-
     Mravec mravecNovy(startx, starty);
     zoznamMravcov.push_back(mravecNovy);
 }
@@ -20,26 +19,20 @@ void Simulacia::vypisPlochuMravcov() {
     std::cout << "\n";
     for (int i = 0; i < (plocha.getSirka() * 2) - 1; i++) { std::cout << "-"; }
     std::cout << "\n";
+    for (int y = 0; y < plocha.getVyska(); y++) {
 
-    int width = plocha.getSirka();
-    int height = plocha.getVyska();
-
-    for (int y = 0; y < height; y++) {
-
-        for (int x = 0; x < width; x++) {
+        for (int x = 0; x < plocha.getSirka(); x++) {
 
             if (x > 0) std::cout << "|";
 
             bool mravecFound = false;
             for (int j = 0; j < zoznamMravcov.size(); j++) {
 
-                int wrappedX = (zoznamMravcov[j].getPolohaX() + width) % width;
-                int wrappedY = (zoznamMravcov[j].getPolohaY() + height) % height;
+                int wrappedX = (zoznamMravcov[j].getPolohaX() + plocha.getSirka()) % plocha.getSirka();
+                int wrappedY = (zoznamMravcov[j].getPolohaY() + plocha.getVyska()) % plocha.getVyska();
 
                 if (wrappedX == x && wrappedY == y && !zoznamMravcov[j].isDisabled()) {
-
                     zoznamMravcov[j].vypisSmer();
-
                     mravecFound = true;
                     break;
                 }
@@ -48,8 +41,7 @@ void Simulacia::vypisPlochuMravcov() {
         }
         std::cout << "\n";
     }
-
-    for (int i = 0; i < (height * 2) - 1; i++) { std::cout << "-"; }
+    for (int i = 0; i < (plocha.getVyska() * 2) - 1; i++) { std::cout << "-"; }
     std::cout << "\n";
 }
 
@@ -60,13 +52,10 @@ void Simulacia::simulujKrok(int j, int logika) {
     int mravecX = zoznamMravcov[j].getPolohaX();
     int mravecY = zoznamMravcov[j].getPolohaY();
 
-    int width = plocha.getSirka();
-    int height = plocha.getVyska();
+    mravecX = (mravecX + plocha.getSirka()) % plocha.getSirka();
+    mravecY = (mravecY + plocha.getVyska()) % plocha.getVyska();
 
-    mravecX = (mravecX + width) % width;
-    mravecY = (mravecY + height) % height;
-
-    int index = mravecY * width + mravecX;
+    int index = mravecY * plocha.getSirka() + mravecX;
 
     int color = plocha.getPoleOnIndex(index).getFarba();
 
@@ -75,8 +64,8 @@ void Simulacia::simulujKrok(int j, int logika) {
         for (int k = 0; k < zoznamMravcov.size(); ++k) {
 
             if (k != j && !zoznamMravcov[k].isDisabled()) {
-                int wrappedX = (zoznamMravcov[k].getPolohaX() + width) % width;
-                int wrappedY = (zoznamMravcov[k].getPolohaY() + height) % height;
+                int wrappedX = (zoznamMravcov[k].getPolohaX() + plocha.getSirka()) % plocha.getSirka();
+                int wrappedY = (zoznamMravcov[k].getPolohaY() + plocha.getVyska()) % plocha.getVyska();
 
                 if (wrappedX == mravecX && wrappedY == mravecY) {
                     zoznamMravcov[j].setDisabled(true);
@@ -85,30 +74,20 @@ void Simulacia::simulujKrok(int j, int logika) {
         }
     }
 
-    if (logika == 0) {
-        if (color == 0)
-            zoznamMravcov[j].otocVpravo();
-        if (color == 1)
-            zoznamMravcov[j].otocVlavo();
-    } else if (logika == 1) {
-        if (color == 0)
-            zoznamMravcov[j].otocVlavo();
-        if (color == 1)
-            zoznamMravcov[j].otocVpravo();
-    }
+    otocMravca(logika, color, j);
 
     plocha.zmenFarbaOnIndex(index);
     zoznamMravcov[j].posunVpred();
 }
 
 
-void Simulacia::simuluj(int pocetMravcov, int pocetKrokov, int logika, int randomOrManualOrFile) {
+void Simulacia::simuluj(int pocetKrokov, int logika, int randomOrManualOrFile) {
 
     //LOGIKA
     //0 = priama
     //1 = inverzna
 
-    inicializuj(pocetMravcov, randomOrManualOrFile);
+    inicializuj(randomOrManualOrFile);
     plocha.vypisPlochu();
     vypisPlochuMravcov();
 
@@ -133,7 +112,6 @@ void Simulacia::simuluj(int pocetMravcov, int pocetKrokov, int logika, int rando
         vypisPlochuMravcov();
 
         std::cout << "\n";
-        //std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     }
 }
 
@@ -154,4 +132,29 @@ bool Simulacia::isAntOnIndex(int index) {
         }
     }
     return false;
+}
+
+void Simulacia::readNumOfAntsAndInicializeAnts() {
+
+    int numOfAnts;
+
+    std::cout << "Zadajte pocet mravcov v simulacii:";
+    std::cin >> numOfAnts;
+
+    for (int i = 0; i < numOfAnts; ++i) pridajMravca();
+}
+
+void Simulacia::otocMravca(int logika, int farbaPola, int indexMravca) {
+
+    if (logika == 0) {
+        if (farbaPola == 0)
+            zoznamMravcov[indexMravca].otocVpravo();
+        if (farbaPola == 1)
+            zoznamMravcov[indexMravca].otocVlavo();
+    } else if (logika == 1) {
+        if (farbaPola == 0)
+            zoznamMravcov[indexMravca].otocVlavo();
+        if (farbaPola == 1)
+            zoznamMravcov[indexMravca].otocVpravo();
+    }
 }
