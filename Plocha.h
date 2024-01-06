@@ -20,10 +20,10 @@ public:
     Plocha() {}
     Plocha(int randomOrManualOrFile);
     int getSirka() const;
-    int getVyska() const;
-    int getVelkostPlochy() const { return this->plocha.size(); };
     void setSirka(int sirka);
+    int getVyska() const;
     void setVyska(int vyska);
+    int getVelkostPlochy() const { return this->plocha.size(); };
     void vypisPlochu();
     Pole getPoleOnIndex(int index);
     void zmenFarbaOnIndex(int index);

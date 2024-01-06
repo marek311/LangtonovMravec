@@ -97,14 +97,8 @@ void Plocha::vytvorPlochuSubor() {
 }
 
 Plocha::Plocha(int randomOrManualOrFile) {
-
-    //0 = random
     if(randomOrManualOrFile == 0) vytvorPlochuRandom();
-
-    //1 = manual
     if(randomOrManualOrFile == 1) vytvorPlochuManual();
-
-    //2 = file
     if(randomOrManualOrFile == 2) vytvorPlochuSubor();
 }
 
@@ -112,12 +106,12 @@ int Plocha::getSirka() const {
     return sirka;
 }
 
-int Plocha::getVyska() const {
-    return vyska;
-}
-
 void Plocha::setSirka(int sirka) {
     Plocha::sirka = sirka;
+}
+
+int Plocha::getVyska() const {
+    return vyska;
 }
 
 void Plocha::setVyska(int vyska) {
