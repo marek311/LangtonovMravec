@@ -14,21 +14,22 @@ private:
     std::mutex mutex;
     Plocha plocha;
     std::vector<Mravec> zoznamMravcov;
-    void inicializuj();
-    void pridajMravca();
-    void vypisPlochuMravcov();
-    void simulujKrok(int j, int logika, int riesenieKolizii);
-    bool isAntOnIndex(int index);
-    void readNumOfAntsAndInicializeAnts();
-    void otocMravca(int logika, int farbaPola, int indexMravca);
-    void vypisAntDirection(int x, int y);
-    void vypisHorizontalLine(int length);
-    void checkAndDisableAntsAtSamePosition(int currentAntIndex, int x, int y);
-    void checkAndReverseAntsAtSamePosition(int currentAntIndex, int x, int y);
+
     void nacitajAkaPlocha();
+    void pridajMravca();
+    void nacitajMravcov();
+    void inicializuj();
     int nacitajPocetKrokov();
     int nacitajLogiku();
     int nacitajRiesenieKolizii();
+    void vypisSmerMravca(int x, int y);
+    void vypisHorizontalLine(int length);
+    void vypisPlochuMravcov();
+    void checkAndDisableAntsAtSamePosition(int currentAntIndex, int x, int y);
+    void checkAndReverseAntsAtSamePosition(int currentAntIndex, int x, int y);
+    void otocMravca(int logika, int farbaPola, int indexMravca);
+    void simulujKrok(int j, int logika, int riesenieKolizii);
+    bool isAntOnIndex(int index);
 
 public:
     Simulacia() {}
