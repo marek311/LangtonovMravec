@@ -8,5 +8,4 @@ int main() {
     Simulacia s;
     s.simuluj();
     //TODO:ulozit do suboru svet
-    //TODO:spravanie mravcov pri koliizi na 1 policku
 }

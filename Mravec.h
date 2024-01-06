@@ -11,8 +11,6 @@ private:
     int smer; // 0 = hore | 1 = vpravo | 2 = dole | 3 = vľavo
     bool disabled;
     bool reverseLogic;
-public:
-
 
 public:
     Mravec() {}
@@ -25,10 +23,10 @@ public:
     bool isReverseLogic() const;
     void setReverseLogic(bool reverseLogic);
     int getPolohaX() const;
-    int getPolohaY() const;
-    int getSmer() const;
     void setPolohaX(int polohaX);
+    int getPolohaY() const;
     void setPolohaY(int polohaY);
+    int getSmer() const;
     void setSmer(int smer);
     void otocVpravo();
     void otocVlavo();

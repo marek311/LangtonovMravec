@@ -1,23 +1,39 @@
 #include "Mravec.h"
 
+bool Mravec::isDisabled() const {
+    return disabled;
+}
+
+void Mravec::setDisabled(bool disabled) {
+    Mravec::disabled = disabled;
+}
+
+bool Mravec::isReverseLogic() const {
+    return reverseLogic;
+}
+
+void Mravec::setReverseLogic(bool reverseLogic) {
+    Mravec::reverseLogic = reverseLogic;
+}
+
 int Mravec::getPolohaX() const {
     return polohaX;
-}
-
-int Mravec::getPolohaY() const {
-    return polohaY;
-}
-
-int Mravec::getSmer() const {
-    return smer;
 }
 
 void Mravec::setPolohaX(int polohaX) {
     Mravec::polohaX = polohaX;
 }
 
+int Mravec::getPolohaY() const {
+    return polohaY;
+}
+
 void Mravec::setPolohaY(int polohaY) {
     Mravec::polohaY = polohaY;
+}
+
+int Mravec::getSmer() const {
+    return smer;
 }
 
 void Mravec::setSmer(int smer) {
@@ -45,25 +61,9 @@ void Mravec::vypis() {
     std::cout << "Smer:" << smer << "\n" << "\n";
 }
 
-bool Mravec::isDisabled() const {
-    return disabled;
-}
-
-void Mravec::setDisabled(bool disabled) {
-    Mravec::disabled = disabled;
-}
-
 void Mravec::vypisSmer() {
     if(smer == 0) std::cout << "^";
     if(smer == 1) std::cout << ">";
     if(smer == 2) std::cout << "v";
     if(smer == 3) std::cout << "<";
-}
-
-bool Mravec::isReverseLogic() const {
-    return reverseLogic;
-}
-
-void Mravec::setReverseLogic(bool reverseLogic) {
-    Mravec::reverseLogic = reverseLogic;
 }
