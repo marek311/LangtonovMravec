@@ -59,3 +59,11 @@ void Mravec::vypisSmer() {
     if(smer == 2) std::cout << "v";
     if(smer == 3) std::cout << "<";
 }
+
+bool Mravec::isReverseLogic() const {
+    return reverseLogic;
+}
+
+void Mravec::setReverseLogic(bool reverseLogic) {
+    Mravec::reverseLogic = reverseLogic;
+}

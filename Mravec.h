@@ -10,14 +10,20 @@ private:
     int polohaY;
     int smer; // 0 = hore | 1 = vpravo | 2 = dole | 3 = vľavo
     bool disabled;
+    bool reverseLogic;
+public:
+
 
 public:
     Mravec() {}
     Mravec(int startX, int startY) : polohaX(startX), polohaY(startY), smer(0) {
         disabled = false;
+        reverseLogic = false;
     }
     bool isDisabled() const;
     void setDisabled(bool disabled);
+    bool isReverseLogic() const;
+    void setReverseLogic(bool reverseLogic);
     int getPolohaX() const;
     int getPolohaY() const;
     int getSmer() const;
