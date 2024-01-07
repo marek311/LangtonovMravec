@@ -1,69 +1,83 @@
+// Mravec.c
+
 #include "Mravec.h"
+#include <stdio.h>
 
-bool Mravec::isDisabled() const {
-    return disabled;
+Mravec createMravec(int startX, int startY) {
+    Mravec newMravec;
+    newMravec.polohaX = startX;
+    newMravec.polohaY = startY;
+    newMravec.smer = 0;
+    newMravec.disabled = 0;
+    newMravec.reverseLogic = 0;
+
+    return newMravec;
 }
 
-void Mravec::setDisabled(bool disabled) {
-    Mravec::disabled = disabled;
+int isDisabled(const Mravec *mravec) {
+    return mravec->disabled;
 }
 
-bool Mravec::isReverseLogic() const {
-    return reverseLogic;
+void setDisabled(Mravec *mravec, int disabled) {
+    mravec->disabled = disabled;
 }
 
-void Mravec::setReverseLogic(bool reverseLogic) {
-    Mravec::reverseLogic = reverseLogic;
+int isReverseLogic(const Mravec *mravec) {
+    return mravec->reverseLogic;
 }
 
-int Mravec::getPolohaX() const {
-    return polohaX;
+void setReverseLogic(Mravec *mravec, int reverseLogic) {
+    mravec->reverseLogic = reverseLogic;
 }
 
-void Mravec::setPolohaX(int polohaX) {
-    Mravec::polohaX = polohaX;
+int getPolohaX(const Mravec *mravec) {
+    return mravec->polohaX;
 }
 
-int Mravec::getPolohaY() const {
-    return polohaY;
+void setPolohaX(Mravec *mravec, int polohaX) {
+    mravec->polohaX = polohaX;
 }
 
-void Mravec::setPolohaY(int polohaY) {
-    Mravec::polohaY = polohaY;
+int getPolohaY(const Mravec *mravec) {
+    return mravec->polohaY;
 }
 
-int Mravec::getSmer() const {
-    return smer;
+void setPolohaY(Mravec *mravec, int polohaY) {
+    mravec->polohaY = polohaY;
 }
 
-void Mravec::setSmer(int smer) {
-    Mravec::smer = smer;
+int getSmer(const Mravec *mravec) {
+    return mravec->smer;
 }
 
-void Mravec::otocVpravo() {
-    smer = (smer + 1) % 4;
+void setSmer(Mravec *mravec, int smer) {
+    mravec->smer = smer;
 }
 
-void Mravec::otocVlavo() {
-    smer = (smer + 3) % 4;
+void otocVpravo(Mravec *mravec) {
+    mravec->smer = (mravec->smer + 1) % 4;
 }
 
-void Mravec::posunVpred() {
-    if (smer == 0) polohaY--;
-    else if (smer == 1) polohaX++;
-    else if (smer == 2) polohaY++;
-    else if (smer == 3) polohaX--;
+void otocVlavo(Mravec *mravec) {
+    mravec->smer = (mravec->smer + 3) % 4;
 }
 
-void Mravec::vypis() {
-    std::cout << "\n"<< "Poloha X:" << polohaX << "\n";
-    std::cout << "Poloha Y:" << polohaY << "\n";
-    std::cout << "Smer:" << smer << "\n" << "\n";
+void posunVpred(Mravec *mravec) {
+    if (mravec->smer == 0) mravec->polohaY--;
+    else if (mravec->smer == 1) mravec->polohaX++;
+    else if (mravec->smer == 2) mravec->polohaY++;
+    else if (mravec->smer == 3) mravec->polohaX--;
 }
 
-void Mravec::vypisSmer() {
-    if(smer == 0) std::cout << "^";
-    if(smer == 1) std::cout << ">";
-    if(smer == 2) std::cout << "v";
-    if(smer == 3) std::cout << "<";
+void vypis(const Mravec *mravec) {
+    printf("\nPoloha X: %d\n", mravec->polohaX);
+    printf("Poloha Y: %d\n", mravec->polohaY);
+    printf("Smer: %d\n\n", mravec->smer);
+}
+
+void vypisSmer(const Mravec *mravec) {
+    if (mravec->smer == 0) printf("^");
+    if (mravec->smer == 1) printf(">");
+    if (mravec->smer == 2) printf("v");
+    if (mravec->smer == 3) printf("<");
 }

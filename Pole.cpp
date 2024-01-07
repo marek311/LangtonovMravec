@@ -1,11 +1,13 @@
-#include "Pole.h"
+#include "pole.h"
 
-Pole::Pole(int farba) : farba(farba) {}
-
-int Pole::getFarba() const {
-    return farba;
+void initPole(struct Pole *pole, int farba) {
+    pole->farba = farba;
 }
 
-void Pole::zmenFarba() {
-    Pole::farba = (farba + 1) % 2;
+int getFarba(const struct Pole *pole) {
+    return pole->farba;
+}
+
+void zmenFarba(struct Pole *pole) {
+    pole->farba = (pole->farba + 1) % 2;
 }

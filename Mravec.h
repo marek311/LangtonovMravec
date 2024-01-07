@@ -1,38 +1,31 @@
-#include <iostream>
+// Mravec.h
 
-#ifndef LANGTONOVMRAVEC_MRAVEC_H
-#define LANGTONOVMRAVEC_MRAVEC_H
+#ifndef MRANVEC_H
+#define MRANVEC_H
 
-class Mravec {
-
-private:
+typedef struct {
     int polohaX;
     int polohaY;
     int smer; // 0 = hore | 1 = vpravo | 2 = dole | 3 = vľavo
-    bool disabled;
-    bool reverseLogic;
+    int disabled; // 0 or 1 (bool)
+    int reverseLogic; // 0 or 1 (bool)
+} Mravec;
 
-public:
-    Mravec() {}
-    Mravec(int startX, int startY) : polohaX(startX), polohaY(startY), smer(0) {
-        disabled = false;
-        reverseLogic = false;
-    }
-    bool isDisabled() const;
-    void setDisabled(bool disabled);
-    bool isReverseLogic() const;
-    void setReverseLogic(bool reverseLogic);
-    int getPolohaX() const;
-    void setPolohaX(int polohaX);
-    int getPolohaY() const;
-    void setPolohaY(int polohaY);
-    int getSmer() const;
-    void setSmer(int smer);
-    void otocVpravo();
-    void otocVlavo();
-    void posunVpred();
-    void vypis();
-    void vypisSmer();
-};
+Mravec createMravec(int startX, int startY);
+int isDisabled(const Mravec *mravec);
+void setDisabled(Mravec *mravec, int disabled);
+int isReverseLogic(const Mravec *mravec);
+void setReverseLogic(Mravec *mravec, int reverseLogic);
+int getPolohaX(const Mravec *mravec);
+void setPolohaX(Mravec *mravec, int polohaX);
+int getPolohaY(const Mravec *mravec);
+void setPolohaY(Mravec *mravec, int polohaY);
+int getSmer(const Mravec *mravec);
+void setSmer(Mravec *mravec, int smer);
+void otocVpravo(Mravec *mravec);
+void otocVlavo(Mravec *mravec);
+void posunVpred(Mravec *mravec);
+void vypis(const Mravec *mravec);
+void vypisSmer(const Mravec *mravec);
 
-#endif //LANGTONOVMRAVEC_MRAVEC_H
+#endif // MRANVEC_H

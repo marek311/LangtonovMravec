@@ -13,7 +13,7 @@ void Simulacia::nacitajAkaPlocha() {
 void Simulacia::pridajMravca() {
     int startx = std::rand() % plocha.getSirka();
     int starty = std::rand() % plocha.getVyska();
-    Mravec mravecNovy(startx, starty);
+    Mravec mravecNovy = createMravec(startx, starty);
     zoznamMravcov.push_back(mravecNovy);
 }
 
@@ -57,11 +57,11 @@ int Simulacia::nacitajRiesenieKolizii() {
 void Simulacia::vypisSmerMravca(int x, int y) {
     bool mravecFound = false;
     for (int j = 0; j < zoznamMravcov.size(); j++) {
-        int wrappedX = (zoznamMravcov[j].getPolohaX() + plocha.getSirka()) % plocha.getSirka();
-        int wrappedY = (zoznamMravcov[j].getPolohaY() + plocha.getVyska()) % plocha.getVyska();
+        int wrappedX = (zoznamMravcov[j].polohaX + plocha.getSirka()) % plocha.getSirka();
+        int wrappedY = (zoznamMravcov[j].polohaY + plocha.getVyska()) % plocha.getVyska();
 
-        if (wrappedX == x && wrappedY == y && !zoznamMravcov[j].isDisabled()) {
-            zoznamMravcov[j].vypisSmer();
+        if (wrappedX == x && wrappedY == y && !zoznamMravcov[j].disabled) {
+            vypisSmer(&zoznamMravcov[j]);
             mravecFound = true;
             break;
         }
@@ -92,12 +92,12 @@ void Simulacia::vypisPlochuMravcov() {
 void Simulacia::checkAndDisableAntsAtSamePosition(int currentAntIndex, int x, int y) {
 
     for (int k = 0; k < zoznamMravcov.size(); ++k) {
-        if (k != currentAntIndex && !zoznamMravcov[k].isDisabled()) {
-            int wrappedX = (zoznamMravcov[k].getPolohaX() + plocha.getSirka()) % plocha.getSirka();
-            int wrappedY = (zoznamMravcov[k].getPolohaY() + plocha.getVyska()) % plocha.getVyska();
+        if (k != currentAntIndex && !zoznamMravcov[k].disabled) {
+            int wrappedX = (zoznamMravcov[k].polohaX + plocha.getSirka()) % plocha.getSirka();
+            int wrappedY = (zoznamMravcov[k].polohaY + plocha.getVyska()) % plocha.getVyska();
 
             if (wrappedX == x && wrappedY == y) {
-                zoznamMravcov[currentAntIndex].setDisabled(true);
+                zoznamMravcov[currentAntIndex].disabled = (true);
             }
         }
     }
@@ -106,11 +106,11 @@ void Simulacia::checkAndDisableAntsAtSamePosition(int currentAntIndex, int x, in
 void Simulacia::checkAndReverseAntsAtSamePosition(int currentAntIndex, int x, int y) {
 
     for (int k = 0; k < zoznamMravcov.size(); ++k) {
-        if (k != currentAntIndex && !zoznamMravcov[k].isReverseLogic()) {
-            int wrappedX = (zoznamMravcov[k].getPolohaX() + plocha.getSirka()) % plocha.getSirka();
-            int wrappedY = (zoznamMravcov[k].getPolohaY() + plocha.getVyska()) % plocha.getVyska();
+        if (k != currentAntIndex && !zoznamMravcov[k].reverseLogic) {
+            int wrappedX = (zoznamMravcov[k].polohaX + plocha.getSirka()) % plocha.getSirka();
+            int wrappedY = (zoznamMravcov[k].polohaY + plocha.getVyska()) % plocha.getVyska();
             if (wrappedX == x && wrappedY == y) {
-                zoznamMravcov[currentAntIndex].setReverseLogic(true);
+                setReverseLogic(&zoznamMravcov[currentAntIndex], zoznamMravcov[currentAntIndex].reverseLogic % 2);
             }
         }
     }
@@ -119,30 +119,31 @@ void Simulacia::checkAndReverseAntsAtSamePosition(int currentAntIndex, int x, in
 void Simulacia::otocMravca(int logika, int farbaPola, int indexMravca) {
     if (logika == 0) {
         if (farbaPola == 0)
-            zoznamMravcov[indexMravca].otocVpravo();
+            otocVpravo(&zoznamMravcov[indexMravca]);
         if (farbaPola == 1)
-            zoznamMravcov[indexMravca].otocVlavo();
+            otocVlavo(&zoznamMravcov[indexMravca]);
     } else if (logika == 1) {
         if (farbaPola == 0)
-            zoznamMravcov[indexMravca].otocVlavo();
+            otocVlavo(&zoznamMravcov[indexMravca]);
         if (farbaPola == 1)
-            zoznamMravcov[indexMravca].otocVpravo();
+            otocVpravo(&zoznamMravcov[indexMravca]);
     }
 }
 
 void Simulacia::simulujKrok(int j, int logika, int riesenieKolizii) {
-    std::lock_guard<std::mutex> lock(mutex);
-    int mravecX = zoznamMravcov[j].getPolohaX();
-    int mravecY = zoznamMravcov[j].getPolohaY();
+    int mravecX = zoznamMravcov[j].polohaX;
+    int mravecY = zoznamMravcov[j].polohaY;
     int index = mravecY * plocha.getSirka() + mravecX;
     int color = plocha.getPoleOnIndex(index).getFarba();
     if(riesenieKolizii == 0) checkAndDisableAntsAtSamePosition(j, mravecX, mravecY);
     if(riesenieKolizii == 1) checkAndReverseAntsAtSamePosition(j, mravecX, mravecY);
     otocMravca(logika, color, j);
     plocha.zmenFarbaOnIndex(index);
-    zoznamMravcov[j].posunVpred();
-    zoznamMravcov[j].setPolohaX((zoznamMravcov[j].getPolohaX() + plocha.getSirka()) % plocha.getSirka());
-    zoznamMravcov[j].setPolohaY((zoznamMravcov[j].getPolohaY() + plocha.getVyska()) % plocha.getVyska());
+    posunVpred(&zoznamMravcov[j]);
+    setPolohaX(&zoznamMravcov[j], (getPolohaX(&zoznamMravcov[j]) + plocha.getSirka()) % plocha.getSirka());
+    setPolohaY(&zoznamMravcov[j], (getPolohaY(&zoznamMravcov[j]) + plocha.getVyska()) % plocha.getVyska());
+    //vypis(&zoznamMravcov[j]);
+
 }
 
 bool Simulacia::isAntOnIndex(int index) {
@@ -152,10 +153,10 @@ bool Simulacia::isAntOnIndex(int index) {
     int x = index % width;
     int y = index / width;
     for (int j = 0; j < zoznamMravcov.size(); ++j) {
-        int wrappedX = (zoznamMravcov[j].getPolohaX() + width) % width;
-        int wrappedY = (zoznamMravcov[j].getPolohaY() + height) % height;
+        int wrappedX = (getPolohaX(&zoznamMravcov[j]) + width) % width;
+        int wrappedY = (getPolohaY(&zoznamMravcov[j]) + height) % height;
 
-        if (wrappedX == x && wrappedY == y && !zoznamMravcov[j].isDisabled()) {
+        if (wrappedX == x && wrappedY == y && !zoznamMravcov[j].disabled) {
             return true;
         }
     }
@@ -169,32 +170,28 @@ void Simulacia::simuluj() {
     int riesenieKolizii = nacitajRiesenieKolizii();
     plocha.vypisPlochu();
     vypisPlochuMravcov();
-    std::vector<std::thread> zoznamKrokovVlakna;
+
     for (int i = 0; i < pocetKrokov; ++i) {
         for (int j = 0; j < zoznamMravcov.size(); ++j) {
-            //simulujKrok(j, logika);
-            if(riesenieKolizii == 0) {
 
-                if (!zoznamMravcov[j].isDisabled()) {
-                    zoznamKrokovVlakna.emplace_back(&Simulacia::simulujKrok, this, j, logika, riesenieKolizii);
+            if(riesenieKolizii == 0) {
+                if (!zoznamMravcov[j].disabled) {
+                    simulujKrok(j, logika, riesenieKolizii);
                 }
             }
             if(riesenieKolizii == 1) {
-                if (!zoznamMravcov[j].isReverseLogic()) {
-                    zoznamKrokovVlakna.emplace_back(&Simulacia::simulujKrok, this, j, logika, riesenieKolizii);
+                if (!zoznamMravcov[j].reverseLogic) {
+                    simulujKrok(j, logika, riesenieKolizii);
                 }
-                if (zoznamMravcov[j].isReverseLogic()) {
+                if (zoznamMravcov[j].reverseLogic) {
                     int opacnaLogika = (logika + 1) % 2;
-                    zoznamKrokovVlakna.emplace_back(&Simulacia::simulujKrok, this, j, opacnaLogika, riesenieKolizii);
+                    simulujKrok(j, opacnaLogika, riesenieKolizii);
                 }
             }
         }
         std::cout << "\n" << "\n";
         std::cout << "KROK: " << i << "\n";
-        for (auto &thread : zoznamKrokovVlakna) {
-            thread.join();
-        }
-        zoznamKrokovVlakna.clear();
+
         plocha.vypisPlochu();
         vypisPlochuMravcov();
         std::cout << "\n";

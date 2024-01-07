@@ -1,14 +1,12 @@
 #ifndef LANGTONOVMRAVEC_POLE_H
 #define LANGTONOVMRAVEC_POLE_H
 
-class Pole {
-private:
+struct Pole {
     int farba; // 0 = biela | 1 = cierna
-
-public:
-    Pole(int farba);
-    int getFarba() const;
-    void zmenFarba();
 };
 
-#endif //LANGTONOVMRAVEC_POLE_H
+void initPole(struct Pole *pole, int farba);
+int getFarba(const struct Pole *pole);
+void zmenFarba(struct Pole *pole);
+
+#endif // LANGTONOVMRAVEC_POLE_H
