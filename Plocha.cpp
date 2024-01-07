@@ -14,11 +14,8 @@ void vytvorPlochuRandom(struct Plocha *plocha) {
     plocha->sirka = (0 < sirkaNacitana && sirkaNacitana < 50) ? sirkaNacitana : 50;
     plocha->vyska = (0 < vyskaNacitana && vyskaNacitana < 50) ? vyskaNacitana : 50;
 
-
-
     for (int i = 0; i < plocha->sirka * plocha->vyska; i++) {
         initPole(&plocha->plocha[i], rand() % 2);
-        printf("SOMTU: ");
     }
 }
 

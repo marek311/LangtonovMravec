@@ -12,7 +12,6 @@
 class Simulacia {
 
 private:
-    std::mutex mutex;
     struct Plocha plocha;
     std::vector<Mravec> zoznamMravcov;
 

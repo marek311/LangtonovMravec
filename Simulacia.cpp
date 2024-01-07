@@ -144,7 +144,6 @@ void Simulacia::simulujKrok(int j, int logika, int riesenieKolizii) {
     posunVpred(&zoznamMravcov[j]);
     setPolohaX(&zoznamMravcov[j], (getPolohaX(&zoznamMravcov[j]) + plocha.sirka) % plocha.sirka);
     setPolohaY(&zoznamMravcov[j], (getPolohaY(&zoznamMravcov[j]) + plocha.vyska) % plocha.vyska);
-    //vypis(&zoznamMravcov[j]);
 }
 
 bool Simulacia::isAntOnIndex(int index) {
