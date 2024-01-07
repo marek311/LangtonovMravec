@@ -1,120 +1,128 @@
 #include "Plocha.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-void Plocha::vytvorPlochuRandom() {
-
+void vytvorPlochuRandom(struct Plocha *plocha) {
     int sirkaNacitana, vyskaNacitana;
 
-    std::cout << "Zadajte rozmery plochy ktora bude vygenerovana RANDOM: \n";
-    std::cout << "Sirka: \n" ;
-    std::cin >> sirkaNacitana;
-    std::cout << "Vyska: \n";
-    std::cin >> vyskaNacitana;
+    printf("Zadajte rozmery plochy ktora bude vygenerovana RANDOM:\n");
+    printf("Sirka: ");
+    scanf("%d", &sirkaNacitana);
+    printf("Vyska: ");
+    scanf("%d", &vyskaNacitana);
 
-    if(0 < sirkaNacitana && sirkaNacitana < 50) sirka = sirkaNacitana;
-    if(0 < vyskaNacitana && vyskaNacitana < 50) vyska = vyskaNacitana;
+    plocha->sirka = (0 < sirkaNacitana && sirkaNacitana < 50) ? sirkaNacitana : 50;
+    plocha->vyska = (0 < vyskaNacitana && vyskaNacitana < 50) ? vyskaNacitana : 50;
 
-    int pocetPoli = sirka * vyska;
-    for(int i = 0; i < pocetPoli; i++) {
-        int cislo = std::rand() % 2;
-        struct Pole myPole;
-        initPole(&myPole, cislo);
-        plocha.push_back(myPole);
+
+
+    for (int i = 0; i < plocha->sirka * plocha->vyska; i++) {
+        initPole(&plocha->plocha[i], rand() % 2);
+        printf("SOMTU: ");
     }
 }
 
-void Plocha::vytvorPlochuManual() {
+void vytvorPlochuManual(struct Plocha *plocha) {
+    int i;
+    plocha->sirka = 50;
+    plocha->vyska = 50;
 
-    int sirkaNacitana, vyskaNacitana;
+    plocha->plocha = (struct Pole *)malloc(plocha->sirka * plocha->vyska * sizeof(struct Pole));
 
-    std::cout << "Zadajte rozmery plochy ktora bude vygenerovana MANUALNE: \n";
-    std::cout << "Sirka: \n" ;
-    std::cin >> sirkaNacitana;
-    std::cout << "Vyska: \n";
-    std::cin >> vyskaNacitana;
+    if (plocha->plocha == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
 
-    if(0 < sirkaNacitana && sirkaNacitana < 50) sirka = sirkaNacitana;
-    if(0 < vyskaNacitana && vyskaNacitana < 50) vyska = vyskaNacitana;
-
-    int pocetPoli = sirka * vyska;
-    for(int i = 0; i < pocetPoli; i++) {
-        int cislo = 0;
-        struct Pole myPole;
-        initPole(&myPole, cislo);
-        plocha.push_back(myPole);
+    for (i = 0; i < plocha->sirka * plocha->vyska; i++) {
+        initPole(&plocha->plocha[i], 0); // Initialize with 0 for simplicity
     }
 
     int stop, x, y;
 
-    while (true) {
+    while (1) {
+        printf("Zadajte suradnice prvku ktory chcete nastavit na cierny:\n");
+        printf("X: ");
+        if (scanf("%d", &x) != 1) {
+            fprintf(stderr, "Invalid input for X\n");
+            exit(EXIT_FAILURE);
+        }
+        printf("Y: ");
+        if (scanf("%d", &y) != 1) {
+            fprintf(stderr, "Invalid input for Y\n");
+            exit(EXIT_FAILURE);
+        }
 
-        std::cout << "Zadajte suradnice prvku ktory chcete nastavit na cierny:" << "\n";
-        std::cout << "X: ";
-        std::cin >> x;
-        std::cout << "Y: ";
-        std::cin >> y;
+        if (0 <= x && x < plocha->sirka && 0 <= y && y < plocha->vyska) {
+            zmenFarba(&plocha->plocha[y * plocha->sirka + x]);
+        }
 
-        if (0 <= x && x < sirka && 0 <= y && y < vyska) zmenFarba(&plocha[y * sirka + x]);
+        printf("Zadajte\n"
+               "0 - dalsie pole na cierne\n"
+               "1 - ukoncit zadavanie ciernych poli\n");
 
-        std::cout << "Zadajte \n"
-                     "0 - dalsie pole na cierne \n"
-                     "1 - ukoncit zadavanie ciernych poli \n";
+        scanf("%d", &stop);
 
-        std::cin >> stop;
+        if (stop == 1) {
+            break;
+        }
 
-        if (stop == 1) break;
-
-        std::cin.clear();
+        fflush(stdin);
     }
 }
 
-Plocha::Plocha(int randomOrManualOrFile) {
-    if(randomOrManualOrFile == 0) vytvorPlochuRandom();
-    if(randomOrManualOrFile == 1) vytvorPlochuManual();
-}
+void inicializujPlochu(struct Plocha *plocha, int randomOrManualOrFile) {
 
-int Plocha::getSirka() const {
-    return sirka;
-}
+    plocha->plocha = (struct Pole *)malloc(plocha->sirka * plocha->vyska * sizeof(struct Pole));
 
-void Plocha::setSirka(int sirka) {
-    Plocha::sirka = sirka;
-}
-
-int Plocha::getVyska() const {
-    return vyska;
-}
-
-void Plocha::setVyska(int vyska) {
-    Plocha::vyska = vyska;
-}
-
-void Plocha::vypisPlochu() {
-
-    std::cout << "\n";
-    for (int i = 0; i < (sirka * 2) - 1; i++) { std::cout << "-"; }
-    std::cout << "\n";
-
-    int pocetPoli = sirka * vyska;
-    for(int i = 0; i < pocetPoli; i++) {
-
-        //Koniec riadku -> novy riadok
-        if (i > 0 && i % sirka == 0) std::cout << "\n";
-
-        //Nie koniec riadku -> oddelovac
-        if (i % sirka != 0) std::cout << "|";
-
-        int cislo = getFarba(&plocha[i]);
-        std::cout << cislo;
+    if (plocha->plocha == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
     }
 
-    std::cout << "\n";
-    for (int i = 0; i < (sirka * 2) - 1; i++) { std::cout << "-"; }
+    if (randomOrManualOrFile == 0) {
+        vytvorPlochuRandom(plocha);
+    } else if (randomOrManualOrFile == 1) {
+        vytvorPlochuManual(plocha);
+    }
 }
 
-Pole Plocha::getPoleOnIndex(int index) {
-    if(index < plocha.size()) return plocha[index];
+void zrusPlochu(struct Plocha *plocha) {
+    free(plocha->plocha);
+    plocha->plocha = NULL; // Optional: Set the pointer to NULL after freeing
 }
 
-void Plocha::zmenFarbaOnIndex(int index) {
-    if(index < plocha.size()) zmenFarba(&plocha[index]);
+void vypisPlochu(const struct Plocha *plocha) {
+    int i;
+
+    printf("\n");
+    for (i = 0; i < (plocha->sirka * 2) - 1; i++) {
+        printf("-");
+    }
+    printf("\n");
+
+    for (i = 0; i < plocha->sirka * plocha->vyska; i++) {
+        if (i > 0 && i % plocha->sirka == 0) {
+            printf("\n");
+        }
+        if (i % plocha->sirka != 0) {
+            printf("|");
+        }
+
+        int cislo = getFarba(&plocha->plocha[i]);
+        printf("%d", cislo);
+    }
+
+    printf("\n");
+    for (i = 0; i < (plocha->sirka * 2) - 1; i++) {
+        printf("-");
+    }
+}
+
+struct Pole getPoleOnIndex(const struct Plocha *plocha, int index) {
+    return plocha->plocha[index];
+}
+
+void zmenFarbaOnIndex(struct Plocha *plocha, int index) {
+    zmenFarba(&plocha->plocha[index]);
 }

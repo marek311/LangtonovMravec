@@ -2,6 +2,7 @@
 #include <chrono>
 #include <thread>
 #include <mutex>
+#include <iostream>
 #include "Plocha.h"
 #include "Mravec.h"
 
@@ -12,7 +13,7 @@ class Simulacia {
 
 private:
     std::mutex mutex;
-    Plocha plocha;
+    struct Plocha plocha;
     std::vector<Mravec> zoznamMravcov;
 
     void nacitajAkaPlocha();
