@@ -16,8 +16,9 @@ void Plocha::vytvorPlochuRandom() {
     int pocetPoli = sirka * vyska;
     for(int i = 0; i < pocetPoli; i++) {
         int cislo = std::rand() % 2;
-        Pole vytvaranePole(cislo);
-        plocha.push_back(vytvaranePole);
+        struct Pole myPole;
+        initPole(&myPole, cislo);
+        plocha.push_back(myPole);
     }
 }
 
@@ -37,8 +38,9 @@ void Plocha::vytvorPlochuManual() {
     int pocetPoli = sirka * vyska;
     for(int i = 0; i < pocetPoli; i++) {
         int cislo = 0;
-        Pole vytvaranePole(cislo);
-        plocha.push_back(vytvaranePole);
+        struct Pole myPole;
+        initPole(&myPole, cislo);
+        plocha.push_back(myPole);
     }
 
     int stop, x, y;
@@ -51,7 +53,7 @@ void Plocha::vytvorPlochuManual() {
         std::cout << "Y: ";
         std::cin >> y;
 
-        if (0 <= x && x < sirka && 0 <= y && y < vyska) plocha[y * sirka + x].zmenFarba();
+        if (0 <= x && x < sirka && 0 <= y && y < vyska) zmenFarba(&plocha[y * sirka + x]);
 
         std::cout << "Zadajte \n"
                      "0 - dalsie pole na cierne \n"
@@ -65,41 +67,9 @@ void Plocha::vytvorPlochuManual() {
     }
 }
 
-void Plocha::vytvorPlochuSubor() {
-
-    std::string nazovSuboru;
-
-    std::cout << "Zadajte absolutnu cestu k suboru z ktoreho chcete nacitat rozlozenie plochy:" << "\n";
-    std::cout << "Absolutna cesta: ";
-    std::cin >> nazovSuboru;
-    std::cin.clear();
-
-    std::cout << nazovSuboru << "\n";
-
-    std::ifstream subor(nazovSuboru);
-    if (!subor.is_open()) {
-        std::cerr << "Chyba pri otvarani suboru!" << std::endl;
-        return;
-    }
-
-    subor >> sirka >> vyska;
-    plocha.clear();
-
-    for (int i = 0; i < vyska; ++i) {
-        for (int j = 0; j < sirka; ++j) {
-            int cislo;
-            subor >> cislo;
-            Pole vytvaranePole(cislo);
-            plocha.push_back(vytvaranePole);
-        }
-    }
-    subor.close();
-}
-
 Plocha::Plocha(int randomOrManualOrFile) {
     if(randomOrManualOrFile == 0) vytvorPlochuRandom();
     if(randomOrManualOrFile == 1) vytvorPlochuManual();
-    if(randomOrManualOrFile == 2) vytvorPlochuSubor();
 }
 
 int Plocha::getSirka() const {
@@ -133,7 +103,7 @@ void Plocha::vypisPlochu() {
         //Nie koniec riadku -> oddelovac
         if (i % sirka != 0) std::cout << "|";
 
-        int cislo = plocha[i].getFarba();
+        int cislo = getFarba(&plocha[i]);
         std::cout << cislo;
     }
 
@@ -146,5 +116,5 @@ Pole Plocha::getPoleOnIndex(int index) {
 }
 
 void Plocha::zmenFarbaOnIndex(int index) {
-    if(index < plocha.size()) plocha[index].zmenFarba();
+    if(index < plocha.size()) zmenFarba(&plocha[index]);
 }

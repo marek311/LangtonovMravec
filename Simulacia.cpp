@@ -134,7 +134,8 @@ void Simulacia::simulujKrok(int j, int logika, int riesenieKolizii) {
     int mravecX = zoznamMravcov[j].polohaX;
     int mravecY = zoznamMravcov[j].polohaY;
     int index = mravecY * plocha.getSirka() + mravecX;
-    int color = plocha.getPoleOnIndex(index).getFarba();
+    const Pole& pole = plocha.getPoleOnIndex(index);
+    int color = getFarba(&pole);
     if(riesenieKolizii == 0) checkAndDisableAntsAtSamePosition(j, mravecX, mravecY);
     if(riesenieKolizii == 1) checkAndReverseAntsAtSamePosition(j, mravecX, mravecY);
     otocMravca(logika, color, j);

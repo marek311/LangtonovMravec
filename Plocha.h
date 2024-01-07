@@ -11,10 +11,9 @@ class Plocha {
 private:
     int sirka;
     int vyska;
-    std::vector<Pole> plocha;
+    std::vector<struct Pole> plocha;
     void vytvorPlochuRandom();
     void vytvorPlochuManual();
-    void vytvorPlochuSubor();
 
 public:
     Plocha() {}
